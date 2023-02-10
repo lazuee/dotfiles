@@ -1,0 +1,28 @@
+[
+	{
+		"key": "alt+left",
+		"command": "workbench.action.navigateBack"
+	},
+	{
+		"key": "ctrl+alt+-",
+		"command": "-workbench.action.navigateBack"
+	},
+	{
+		"key": "alt+right",
+		"command": "workbench.action.navigateForward"
+	},
+	{
+		"key": "ctrl+shift+-",
+		"command": "-workbench.action.navigateForward"
+	},
+	{
+		"key": "f4",
+		"command": "editor.action.revealDefinition",
+		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "f12",
+		"command": "-editor.action.revealDefinition",
+		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	}
+]
