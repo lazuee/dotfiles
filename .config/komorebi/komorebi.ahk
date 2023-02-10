@@ -151,7 +151,7 @@ Loop workspaceCount {
         , "On")
     ; Move window to workspace, Alt + Shift + 1~9
     Hotkey("!+" A_Index, (key) => writeLog("[Komorebi] Move window to workspace No. " Integer(SubStr(key, 3)))
-            MoveToWorkspace(Integer(SubStr(key, 2)) - 1)
+            MoveToWorkspace(Integer(SubStr(key, 3)) - 1)
         , "On")
 }
 
