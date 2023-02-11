@@ -8,10 +8,9 @@ SendMode("Input")
 SetWorkingDir(A_ScriptDir)
 
 #Include komorebi.lib.ahk
-#Include ../../ahk/variables.ahk
-
-#Include ../../ahk/common.ahk
-#Include ../../ahk/terminal.ahk
+#Include ahk/variables.ahk
+#Include ahk/common.ahk
+#Include ahk/terminal.ahk
 
 containerPadAmount := 8
 workspacePadAmount := 8
@@ -27,15 +26,18 @@ onDisplayChange(wParam, lParam, msg, hwnd) {
 }
 
 KomorebiStart() {
-    if ProcessExist("komorebi.exe") {
-        writeLog("[Komorebi] Still running!")
-        KomorebiStop()
+    ; if ProcessExist("komorebi.exe") {
+    ;     writeLog("[Komorebi] Still running!")
+    ;     KomorebiStop()
 
-        writeLog("[Komorebi] Done! Now proceed to start.")
+    ;     writeLog("[Komorebi] Done! Now proceed to start.")
+    ; }
+
+    if not ProcessExist("komorebi.exe") {
+        writeLog("[Komorebi] Not running! executing start...")
+        RunWait("komorebic.exe start --await-configuration")
     }
-
-    RunWait("komorebic.exe start --await-configuration")
-    Sleep(10000)
+    Sleep(5000)
 
     yasb_start()
 
@@ -69,7 +71,6 @@ KomorebiStart() {
     FloatRule("title", "Window Spy")
     FloatRule("exe", "git-credential-helper-selector.exe")
     FloatRule("exe", "ApplicationFrameHost.exe")
-    FloatRule("exe", "explorer.exe")
     FloatRule("exe", "msiexec.exe")
     FloatRule("exe", "ahk.exe")
 
@@ -105,7 +106,7 @@ yasb_start() {
     if not ProcessExist("pythonw.exe") {
         writeLog("")
         writeLog("[Yasb] Starting...")
-        RunWait("pythonw " dotfiles_path "\yasb\src\main.py", , "Hide")
+        RunWait("pythonw " A_ScriptDir "\yasb\src\main.py", , "Hide")
         writeLog("[Yasb] Started!")
     }
 }
@@ -113,8 +114,9 @@ yasb_start() {
 KomorebiStop() {
     if ProcessExist("komorebi.exe") {
         writeLog("[Komorebi] Stopping...")
-        RunWait("komorebic restore-windows", , "Hide")
-        RunWait("powershell " . "Stop-Process -Name 'komorebi'", , "Hide")
+        RunWait("komorebic.exe restore-windows", , "Hide")
+        RunWait("komorebic.exe stop", , "Hide")
+        ; RunWait("powershell Stop-Process -Name 'komorebi' -Force -ErrorAction SilentlyContinue", , "Hide")
         writeLog("[Komorebi] Stopped!")
     }
 
@@ -124,15 +126,16 @@ KomorebiStop() {
 YasbStop() {
     if ProcessExist("pythonw.exe") {
         writeLog("[Yasb] Stopping...")
-        RunWait("taskkill.exe /f /im pythonw.exe", , "Hide")
+        RunWait("powershell Stop-Process -Name 'pythonw' -Force -ErrorAction SilentlyContinue", , "Hide")
         writeLog("[Yasb] Stopped!")
     }
 }
 
 KoremibiRestart() {
-    writeLog("[Komorebi] Restarting...")
+    writeLog("[Komorebi] Restart!")
+    ReloadConfiguration()
+    KomorebiStop()
     Reload()
-    writeLog("[Komorebi] Restarted!...")
 }
 
 KomorebiStart()

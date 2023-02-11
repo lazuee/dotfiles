@@ -3,11 +3,12 @@
 
 # Imports
 function Load-Module ($m) {
-    if (!(Get-Module | Where-Object {$_.Name -eq $m})) {
-        if (Get-Module -ListAvailable | Where-Object {$_.Name -eq $m}) {
+    if (!(Get-Module | Where-Object { $_.Name -eq $m })) {
+        if (Get-Module -ListAvailable | Where-Object { $_.Name -eq $m }) {
             Import-Module $m -Verbose
-        } else {
-            if (Find-Module -Name $m | Where-Object {$_.Name -eq $m}) {
+        }
+        else {
+            if (Find-Module -Name $m | Where-Object { $_.Name -eq $m }) {
                 Install-Module -Name $m -Force -Verbose -Scope CurrentUser
                 Import-Module $m -Verbose
             }
@@ -53,31 +54,30 @@ Set-Alias code codium
 Set-Alias py python
 
 # Prompt
-if (Get-Command "starship" -ErrorAction SilentlyContinue) { 
-    $Env:STARSHIP_CONFIG="$Env:userprofile\.config\starship.toml"
-    $Env:STARSHIP_DISTRO="SKY"
+if (Get-Command "starship" -ErrorAction SilentlyContinue) {
+    $Env:STARSHIP_CONFIG = "$Env:userprofile\.config\starship.toml"
+    $Env:STARSHIP_DISTRO = "SKY"
     Invoke-Expression (&starship init powershell)
 }
 
-if (Get-Command "komorebic" -ErrorAction SilentlyContinue) { 
+if (Get-Command "komorebic" -ErrorAction SilentlyContinue) {
     $Env:KOMOREBI_CONFIG_HOME = "$Env:userprofile\.config\komorebi"
     $Env:KOMOREBI_AHK_V1_EXE = "C:\Program Files\AutoHotkey\v1.1.36.02\AutoHotkeyU64.exe"
     $Env:KOMOREBI_AHK_V2_EXE = "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe"
-    
+
     function start-tiling {
-        Start-Process "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" "$Env:userprofile\.dotfiles\.config\komorebi\komorebi.ahk"
+        komorebic.exe start --await-configuration
+        Start-Process -FilePath "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" -ArgumentList "$Env:userprofile\.config\komorebi\komorebi.ahk"
     }
 
     function stop-tiling {
-        komorebic.exe work-area-offset 0 0 0 0
-        komorebic.exe stop
-        
-        if (Get-Command "pythonw.exe" -ErrorAction SilentlyContinue) { 
-            taskkill.exe /f /im pythonw.exe
-        }
+        komorebic.exe restore-windows
+
+        Stop-Process -Name "komorebi" -Force -ErrorAction SilentlyContinue
+        Stop-Process -Name "pythonw" -Force -ErrorAction SilentlyContinue
     }
 
 }
 
 # Fix Prompt
-clear
+Clear-Host

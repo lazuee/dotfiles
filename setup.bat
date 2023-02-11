@@ -36,6 +36,7 @@ call :link "%appdata%\VSCodium\User\keybindings.json" "%dotfiles%\.config\.vscod
 
 call :link "%appdata%\discord\settings.json" "%dotfiles%\.config\discord\settings.json"
 
+call :link "%userprofile%\.config\komorebi" "%dotfiles%\.config\komorebi"
 call :link "%userprofile%\.config\yasb" "%dotfiles%\.config\yasb"
 
 call :link "%userprofile%\.config\starship.toml" "%dotfiles%\.config\starship.toml"
