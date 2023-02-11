@@ -39,6 +39,8 @@
 	"workbench.layoutControl.enabled": false,
 	"workbench.list.smoothScrolling": true,
 	"workbench.editor.wrapTabs": true,
+	"workbench.editor.limit.enabled": true,
+	"workbench.editor.limit.value": 5,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.untitled.labelFormat": "name",
 	"workbench.editor.decorations.badges": true,
