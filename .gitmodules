@@ -1,0 +1,3 @@
+[submodule ".config/komorebi/yasb"]
+	path = .config/komorebi/yasb
+	url = https://github.com/denBot/yasb.git
