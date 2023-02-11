@@ -33,6 +33,7 @@ echo Linking...
 
 call :link "%appdata%\VSCodium\User\settings.json" "%dotfiles%\.config\.vscode\settings.json"
 call :link "%appdata%\VSCodium\User\keybindings.json" "%dotfiles%\.config\.vscode\keybindings.json"
+call :link "C:\Program Files\VSCodium\resources\app\product.json" "%dotfiles%\.config\.vscode\product.json"
 
 call :link "%appdata%\discord\settings.json" "%dotfiles%\.config\discord\settings.json"
 

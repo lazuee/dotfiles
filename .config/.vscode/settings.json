@@ -1,5 +1,6 @@
 {
 	"security.workspace.trust.enabled": false,
+	"telemetry.telemetryLevel": "off",
 	"search.useGlobalIgnoreFiles": false,
 	"search.useIgnoreFiles": false,
 	"search.exclude": {
@@ -170,6 +171,7 @@
 	"prettier.tabWidth": 4,
 	"prettier.endOfLine": "crlf",
 	"files.eol": "\r\n",
+	"files.autoGuessEncoding": true,
 	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -196,5 +198,7 @@
 	"AutoHotkey2.AutoLibInclude": "User and Standard",
 	"AutoHotkey2.SymbolFoldingFromOpenBrace": true,
 	"AutoHotkey2.Diagnostics.ParamsCheck": true,
-	"AutoHotkey2.CompleteFunctionParens": true
+	"AutoHotkey2.CompleteFunctionParens": true,
+	"workbench.colorTheme": "Min Dark",
+	"workbench.iconTheme": "vscode-icons"
 }
