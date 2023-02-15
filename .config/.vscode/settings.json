@@ -199,6 +199,7 @@
 	"AutoHotkey2.SymbolFoldingFromOpenBrace": true,
 	"AutoHotkey2.Diagnostics.ParamsCheck": true,
 	"AutoHotkey2.CompleteFunctionParens": true,
-	"workbench.colorTheme": "Min Dark",
-	"workbench.iconTheme": "vscode-icons"
+	"workbench.colorTheme": "Catppuccin Macchiato",
+	"workbench.iconTheme": "vscode-icons",
+	"AhkNekoHelp.CodeLens.showFuncReference": true
 }

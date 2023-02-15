@@ -10,6 +10,8 @@ SetWorkingDir(A_ScriptDir)
 #Include komorebi.lib.ahk
 #Include ahk/variables.ahk
 #Include ahk/common.ahk
+#Include ahk/minWindowed.ahk
+#Include ahk/opacityWindows.ahk
 #Include ahk/terminal.ahk
 
 containerPadAmount := 8
@@ -23,6 +25,14 @@ OnMessage(0x7E, onDisplayChange)
 onDisplayChange(wParam, lParam, msg, hwnd) {
     writeLog("[Komorebi] Display Changed...")
     KoremibiRestart()
+}
+OnExit(OnExiting)
+OnExiting(exit_reason, exit_code) {
+    writeLog("[Komorebi] Exit Reason: " exit_reason)
+    writeLog("[Komorebi] Exit Code: " exit_code)
+
+    KomorebiStop()
+    ExitApp(exit_code)
 }
 
 KomorebiStart() {
@@ -39,7 +49,7 @@ KomorebiStart() {
     }
     Sleep(5000)
 
-    yasb_start()
+    ; yasb_start()
 
     writeLog("")
     writeLog("[Komorebi] Starting...")
@@ -97,9 +107,13 @@ KomorebiStart() {
 
     ; Retile windows
     Sleep(1500)
+    KomorebiRetile()
+    writeLog("[Komorebi] Started!")
+}
+
+KomorebiRetile() {
     writeLog("[Komorebi] Retiling windows")
     Retile()
-    writeLog("[Komorebi] Started!")
 }
 
 yasb_start() {
@@ -112,6 +126,8 @@ yasb_start() {
 }
 
 KomorebiStop() {
+    OpacityWindows("reset")
+
     if ProcessExist("komorebi.exe") {
         writeLog("[Komorebi] Stopping...")
         RunWait("komorebic.exe restore-windows", , "Hide")
@@ -150,18 +166,17 @@ KomorebiStart()
 Loop workspaceCount {
     ; Switch to workspace,  Alt + 1~9
     Hotkey("!" A_Index, (key) => writeLog("[Komorebi] Switch workspace No. " Integer(SubStr(key, 2)))
-            FocusWorkspace(Integer(SubStr(key, 2)) - 1)
+        FocusWorkspace(Integer(SubStr(key, 2)) - 1)
         , "On")
     ; Move window to workspace, Alt + Shift + 1~9
     Hotkey("!+" A_Index, (key) => writeLog("[Komorebi] Move window to workspace No. " Integer(SubStr(key, 3)))
-            MoveToWorkspace(Integer(SubStr(key, 3)) - 1)
+        MoveToWorkspace(Integer(SubStr(key, 3)) - 1)
         , "On")
 }
 
 ; Force a retile, Alt + Shift + R
 !+r:: {
-    writeLog("[Komorebi] Retiling windows")
-    Retile()
+    KomorebiRetile()
 }
 ; Float the focused window, Alt + T
 !t:: {
@@ -174,6 +189,8 @@ Loop workspaceCount {
     ReloadConfiguration()
     KoremibiRestart()
 }
+
+; Quit komorebi.ahk, Alt + Shift + O
 !+o:: {
     writeLog("[Komorebi] Exiting, wait for a moment...")
     KomorebiStop()
@@ -183,10 +200,6 @@ Loop workspaceCount {
 !q:: {
     writeLog("[Komorebi] Close actived window")
     Send("!{f4}")
-}
-; Open Windows Terminal, Alt + Enter
-!Enter:: {
-    ToggleTerminal()
 }
 
 #HotIf WinActive("ahk_exe i)\\spotify\.exe$",)

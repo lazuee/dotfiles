@@ -4,10 +4,15 @@
 #Include variables.ahk
 #Include common.ahk
 
+; Open Windows Terminal, Alt + Enter
+!Enter:: {
+    ToggleTerminal()
+}
+
 ToggleTerminal() {
     matcher := "ahk_class CASCADIA_HOSTING_WINDOW_CLASS"
     DetectHiddenWindows(true)
-    
+
     if WinExist(matcher) {
 
         if !WinActive(matcher) {
