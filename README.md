@@ -4,15 +4,10 @@
 
 ### Links
 
--   Tiny11 - https://archive.org/details/tiny-11-NTDEV
--   VSCodium - https://github.com/VSCodium/vscodium
--   Powershell - https://apps.microsoft.com/store/detail/powershell/9MZ1SNWT0N5D
--   Starship - https://starship.rs
--   AutoHotKey v2.0.2 - https://www.autohotkey.com
--   Komorebi - https://github.com/LGUG2Z/komorebi
--   Yasb - https://github.com/denBot/yasb
--   Font - https://www.jetbrains.com/lp/mono
+-   Windows 11 2h22 - https://www.youtube.com/watch?v=S6PAFKohYn8 (Current)
 -   DragDropNormalizer - https://github.com/krlvm/DragDropNormalizer
+-   Firefox (firefox/user.js) - https://github.com/denis-g/firefox-user.js
+-   Firefox (firefox/chrome) - https://github.com/datguypiko/Firefox-Mod-Blur
 
 ### Star the project 🌟
 
