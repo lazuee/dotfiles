@@ -6,13 +6,13 @@ Persistent(true)
 #Include common.ahk
 
 
-; Increase Opacity, Win + WheelUp
+; Increase Opacity, Alt + Win + WheelUp
 !#WheelUp::
 {
     OpacityWindows("up")
 }
 
-; Decrease Opacity, Win + WheelDown
+; Decrease Opacity, Alt + Win + WheelDown
 !#WheelDown::
 {
     OpacityWindows("down")
@@ -20,6 +20,9 @@ Persistent(true)
 
 OpacityWindows(mode := "none") {
     DetectHiddenWindows(true)
+    if (!WinExist("A"))
+        return
+
     curtrans := WinGetTransparent("A")
     if !curtrans
         curtrans := "255"

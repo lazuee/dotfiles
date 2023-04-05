@@ -4,7 +4,9 @@
 
 ### Links
 
--   Windows 11 22H2 - https://www.youtube.com/watch?v=S6PAFKohYn8 (Current)
+-   Windows 11 2h22 - https://www.youtube.com/watch?v=S6PAFKohYn8 (Current)
+-   ExplorerPatcher - https://github.com/valinet/ExplorerPatcher
+-   DisableOrRestoreRoundedCorners - https://github.com/valinet/Win11DisableRoundedCorners
 -   DragDropNormalizer - https://github.com/krlvm/DragDropNormalizer
 -   Firefox (firefox/user.js) - https://github.com/denis-g/firefox-user.js
 -   Firefox (firefox/chrome) - https://github.com/datguypiko/Firefox-Mod-Blur

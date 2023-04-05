@@ -22,8 +22,10 @@
 @import url("./mods/transparent_bookmarks_bar.css");
 @import url("./mods/cleaner_extensions_menu.css");
 
-*, body {
-  font-family: "JetBrains Mono" !important;
+* {
+	scrollbar-width: thin;
+	font-size: 13px !important;
+	font-family: "JetBrains Mono" !important;
 }
 
 /* ----- My Custom Colors ----- */

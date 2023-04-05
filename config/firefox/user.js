@@ -1,35 +1,4 @@
 
-/**** API ****/
-
-// disable Web Notifications
-user_pref("dom.webnotifications.enabled", false);
-user_pref("dom.webnotifications.serviceworker.enabled", false);
-
-// disable Push API
-user_pref("dom.push.enabled", false);
-user_pref("dom.push.userAgentID", "");
-
-// disable getUserMedia, screen sharing, audio capture, video capture
-user_pref("media.navigator.enabled", false);
-user_pref("media.navigator.video.enabled", false);
-user_pref("media.getusermedia.screensharing.enabled", false);
-user_pref("media.getusermedia.audiocapture.enabled", false);
-
-// disable speech recognition, synthesis
-user_pref("media.webspeech.synth.enabled", false);
-
-// disable Gamepad API to prevent USB device enumeration
-user_pref("dom.gamepad.enabled", false);
-
-// disable Sensor API
-user_pref("device.sensors.enabled", false);
-
-// disable touch events
-user_pref("dom.w3c_touch_events.enabled", 0);
-
-// disable event for device such as a camera, mic, or speaker is connected or removed
-user_pref("media.ondevicechange.enabled", false);
-
 /**** Devtools ****/
 
 // disable devtools news
@@ -55,10 +24,14 @@ user_pref("browser.pocket.enabled", false);
 user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.screenshots.disabled", true);
 
-// Disable recommended extensions
+// disable recommended extensions
 user_pref("browser.newtabpage.activity-stream.asrouter.useruser_prefs.cfr", false);
 user_pref("extensions.htmlaboutaddons.discover.enabled", false);
 user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
+
+// allow installing the unsigned search extensions.
+user_pref("xpinstall.signatures.required", false);
+user_pref("extensions.autoDisableScopes", 0);
 
 /**** History ****/
 
@@ -149,6 +122,14 @@ user_pref("browser.urlbar.decodeURLsOnCopy", true);
 // enable live search suggestions
 user_pref("browser.search.suggest.enabled", true);
 user_pref("browser.urlbar.suggest.searches", true);
+
+// enable calculator/unitConversion suggestions
+user_pref("browser.urlbar.suggest.calculator", true);
+user_pref("browser.urlbar.unitConversion.enabled", true);
+
+// disable engines/topsites suggestions
+user_pref("browser.urlbar.suggest.engines", false);
+user_pref("browser.urlbar.suggest.topsites", false);
 
 // highlight all hits on search
 user_pref("findbar.highlightAll", true);
@@ -300,8 +281,10 @@ user_pref("ui.systemUsesDarkTheme", 1);
 user_pref("devtools.theme", "dark");
 user_pref("reader.color_scheme", "dark");
 
-// allow userChrome.css/userContent.css
+// make the theme work properly
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+user_pref("browser.proton.places-tooltip.enabled", true);
+user_pref("layout.css.moz-document.content.enabled", true);
 
 // disable warning on about:config
 user_pref("browser.aboutConfig.showWarning", false);
@@ -313,6 +296,23 @@ user_pref("reader.content_width", 7);
 // bookmarks settings
 user_pref("browser.toolbars.bookmarks.visibility", "always");
 
-// Disable use of WiFi region/location information
+// disable use of WiFi region/location information
 user_pref("browser.region.network.scan", false);
 user_pref("browser.region.network.url", "");
+
+// eliminate the blank white window during startup
+user_pref("browser.startup.blankWindow", false);
+user_pref("browser.startup.preXulSkeletonUI", false);
+
+// prevent bugs that would otherwise be caused by the custom scrollbars in the user-agent sheet
+user_pref("layout.css.cached-scrollbar-styles.enabled", false);
+
+// allow the color-mix() CSS function
+user_pref("layout.css.color-mix.enabled", true);
+
+// other CSS features
+user_pref("layout.css.moz-outline-radius.enabled", true);
+user_pref("nglayout.initialpaint.delay", 0);
+user_pref("nglayout.initialpaint.delay_in_oopif", 0);
+user_pref("content.notify.interval", 100000);
+user_pref("browser.startup.preXulSkeletonUI", false);

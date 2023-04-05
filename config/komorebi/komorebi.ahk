@@ -7,10 +7,10 @@ Persistent(true)
 SendMode("Input")
 SetWorkingDir(A_ScriptDir)
 
-#Include komorebi.lib.ahk
+#Include komorebic.lib.ahk
 #Include ahk/variables.ahk
 #Include ahk/common.ahk
-#Include ahk/minWindowed.ahk
+; #Include ahk/minWindowed.ahk
 #Include ahk/opacityWindows.ahk
 #Include ahk/terminal.ahk
 
@@ -45,7 +45,7 @@ KomorebiStart() {
 
     if not ProcessExist("komorebi.exe") {
         writeLog("[Komorebi] Not running! executing start...")
-        RunWait("komorebic.exe start --await-configuration")
+        RunWait("komorebic start")
     }
     Sleep(5000)
 
@@ -54,9 +54,9 @@ KomorebiStart() {
     writeLog("")
     writeLog("[Komorebi] Starting...")
 
+    AltFocusHack("enable")
+    WindowHidingBehaviour("cloak")
     CrossMonitorMoveBehaviour("insert")
-    WindowHidingBehaviour("hide")
-    WatchConfiguration("enable")
     InvisibleBorders(7, 0, 14, 7)
     ToggleFocusFollowsMouse("windows")
     ToggleMouseFollowsFocus()
@@ -102,6 +102,8 @@ KomorebiStart() {
     IdentifyBorderOverflowApplication("exe", "ShareX.exe")
     IdentifyBorderOverflowApplication("exe", "opera.exe")
 
+    WatchConfiguration("enable")
+
     ; Allow komorebi to start managing windows
     CompleteConfiguration()
 
@@ -130,8 +132,8 @@ KomorebiStop() {
 
     if ProcessExist("komorebi.exe") {
         writeLog("[Komorebi] Stopping...")
-        RunWait("komorebic.exe restore-windows", , "Hide")
-        RunWait("komorebic.exe stop", , "Hide")
+        RunWait("komorebic restore-windows", , "Hide")
+        RunWait("komorebic stop", , "Hide")
         ; RunWait("powershell Stop-Process -Name 'komorebi' -Force -ErrorAction SilentlyContinue", , "Hide")
         writeLog("[Komorebi] Stopped!")
     }

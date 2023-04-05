@@ -1,3 +1,8 @@
+[Environment]::SetEnvironmentVariable("HOME", "$( $ENV:USERPROFILE )", "User")
+[Environment]::SetEnvironmentVariable("USER", "$( $ENV:USERNAME )", "User")
+
+$ErrorActionPreference = "SilentlyContinue"
+
 function Load-Module ($m) {
     if (!(Get-Module | Where-Object { $_.Name -eq $m })) {
         if (Get-Module -ListAvailable | Where-Object { $_.Name -eq $m }) {
@@ -12,71 +17,112 @@ function Load-Module ($m) {
     }
 }
 
-Load-Module "PSProfiler"
+Load-Module "posh-git"
+Load-Module "Terminal-Icons"
+Load-Module "cd-extras"
 
-Measure-Script {
-    Load-Module "PSReadLine"
-    Load-Module "posh-git"
-    Load-Module "Terminal-Icons"
-    Load-Module "cd-extras"
+function Execute-Command ($FilePath, $ArgumentList, $WorkingDirectory) {
+    $pinfo = New-Object System.Diagnostics.ProcessStartInfo
+    $pinfo.FileName = $FilePath
+    $pinfo.RedirectStandardError = $true
+    $pinfo.RedirectStandardOutput = $true
+    $pinfo.UseShellExecute = $false
+    $pinfo.Arguments = $ArgumentList
+    $pinfo.WorkingDirectory = $WorkingDirectory
+    $p = New-Object System.Diagnostics.Process
+    $p.StartInfo = $pinfo
+    $p.Start() | Out-Null
+    $p.WaitForExit()
+    # [pscustomobject]@{
+    #     stdout = $p.StandardOutput.ReadToEnd()
+    #     stderr = $p.StandardError.ReadToEnd()
+    #     ExitCode = $p.ExitCode
+    # }
+}
 
-    if (Get-Module -ListAvailable -Name "PSReadLine" -ErrorAction SilentlyContinue) {
-        Set-PSReadlineOption -BellStyle None
-        Set-PSReadLineOption -ShowToolTips
-        Set-PSReadLineOption -HistoryNoDuplicates
-        Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-        Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
-        Set-PSReadLineOption -MaximumHistoryCount 4000
+function Get-Process-Command {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Name
+    )
+    Get-WmiObject Win32_Process -Filter "name = '$Name.exe'" -ErrorAction SilentlyContinue | Select-Object CommandLine,ProcessId
+}
 
-        Set-PSReadLineOption -PredictionSource History
+function Wait-For-Process {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$Name,
 
-        Set-PSReadlineKeyHandler -Key UpArrow -Function HistorySearchBackward
-        Set-PSReadlineKeyHandler -Key DownArrow -Function HistorySearchForward
+        [Switch]$IgnoreExistingProcesses
+    )
 
-        Set-PSReadlineKeyHandler -Chord "Shift+Tab" -Function Complete
-        Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-
-        Set-PSReadlineKeyHandler -Key "Ctrl+d" -Function ViExit
-        Set-PSReadLineKeyHandler -Key "Ctrl+z" -Function Undo
+    if ($IgnoreExistingProcesses) {
+        $NumberOfProcesses = (Get-Process -Name $Name -ErrorAction SilentlyContinue).Count
+    } else {
+        $NumberOfProcesses = 0
     }
 
-    # Which
-    function which ($command) {
-        Get-Command -Name $command -ErrorAction SilentlyContinue |
-        Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+    while ( (Get-Process -Name $Name -ErrorAction SilentlyContinue).Count -eq $NumberOfProcesses ) {
+        Start-Sleep -Milliseconds 400
+    }
+}
+
+## Which
+function which {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Command
+    )
+
+    Get-Command -Name $Command -ErrorAction SilentlyContinue |
+    Select-Object -ExpandProperty Path -ErrorAction SilentlyContinue
+}
+
+# Aliases
+Set-Alias code codium
+Set-Alias py python
+
+# Prompt
+if (Get-Command "starship" -ErrorAction SilentlyContinue) {
+    $ENV:STARSHIP_CONFIG = "$( $HOME )/.config/starship.toml"
+    $ENV:STARSHIP_DISTRO = "SKY"
+    Invoke-Expression (&starship init powershell)
+}
+
+if (Get-Command "komorebic" -ErrorAction SilentlyContinue) {
+    $ENV:KOMOREBI_CONFIG_HOME = "$( $HOME )/.config/komorebi"
+    $ENV:KOMOREBI_AHK_EXE = "$( $HOME )/scoop/apps/autohotkey/current/AutoHotkey64.exe"
+
+    function start-tiling {
+        Write-Host "[komorebi] Killing prior komorebi.exe Processes"
+        Get-Process -Name "komorebi" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+
+        Write-Host "[komorebi] Running komorebic.exe start"
+        Execute-Command -FilePath "$( $HOME )/scoop/apps/komorebi/current/komorebic.exe" -ArgumentList "start" -WorkingDirectory "$( $HOME )/.config/komorebi" -ErrorAction SilentlyContinue
+        Wait-For-Process -Name "komorebi"
+        Start-Sleep 3
+
+        Write-Host "[ahk] Starting AutoHotKey"
+        Execute-Command -FilePath "$( $HOME )/scoop/apps/autohotkey/current/AutoHotkey64.exe" -ArgumentList "$( $HOME )/.config/komorebi/komorebi.ahk" -WorkingDirectory "$( $HOME )/.config/komorebi" -ErrorAction SilentlyContinue
     }
 
-    # Aliases
-    Set-Alias code codium
-    Set-Alias py python
+    function stop-tiling {
+        Write-Host "[komorebi] Issuing komorebic stop"
 
-    # Prompt
-    if (Get-Command "starship" -ErrorAction SilentlyContinue) {
-        $ENV:STARSHIP_CONFIG = "$ENV:USERPROFILE\.config\starship.toml"
-        $ENV:STARSHIP_DISTRO = "SKY"
-        Invoke-Expression (&starship init powershell)
+        Execute-Command -FilePath "$( $HOME )/scoop/apps/komorebi/current/komorebic.exe" -ArgumentList "stop" -WorkingDirectory "$( $HOME )/.config/komorebi" -ErrorAction SilentlyContinue
+        Write-Host "[komorebi] Terminating Remaining komorebi Processes"
+        Get-Process -Name "komorebi" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+        Wait-Process -Name "komorebi" -ErrorAction SilentlyContinue
+
+        Write-Host "[komorebi] Checking for Processes"
+        Get-Process-Command -Name "komorebi" -ErrorAction SilentlyContinue
+
+        Write-Host "[ahk] Killing Process"
+        Get-Process -Name "AutoHotKey" -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+        Wait-Process -Name "AutoHotKey" -ErrorAction SilentlyContinue
     }
 
-    if (Get-Command "komorebic" -ErrorAction SilentlyContinue) {
-        $ENV:KOMOREBI_CONFIG_HOME = "$ENV:USERPROFILE\.config\komorebi"
-        $ENV:KOMOREBI_AHK_EXE = "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe"
-
-        function start-tiling {
-            komorebic.exe start --await-configuration
-            Start-Process -FilePath "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" -ArgumentList "$ENV:USERPROFILE\.config\komorebi\komorebi.ahk"
-        }
-
-        function stop-tiling {
-            komorebic.exe restore-windows
-
-            Stop-Process -Name "komorebi" -Force -ErrorAction SilentlyContinue
-            Stop-Process -Name "pythonw" -Force -ErrorAction SilentlyContinue
-        }
-
-    }
 }
 
 # Fix Prompt
 Clear-Host
-
-Invoke-Expression (&starship init powershell)
