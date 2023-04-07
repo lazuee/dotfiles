@@ -1,0 +1,390 @@
+/**
+ * @name Lazuee De Catppuccin
+ * @author lazuee#4070
+ * @version 1.0.0
+ * @description Personal Theme for Discord
+ * @website https://ayo.so/lazuee
+ * @source https://github.com/lazuee/dotfiles
+ * @invite He4UVdHmj5
+ */
+
+
+/* Catppuccin Theme */
+@import url("https://catppuccin.github.io/discord/dist/catppuccin-mocha.theme.css");
+
+/* Replace Emojis/Icons */
+@import url("https://lavender-discord.github.io/IconsaxDiscord/theme.css");
+@import url("https://crearts-community.github.io/Settings-Icons/clients/settings-icons.theme.css");
+@import url("https://crearts-community.github.io/Context-Icons/clients/betterdiscord.css");
+@import url("https://mwittrien.github.io/BetterDiscordAddons/Themes/EmojiReplace/base/Microsoft.css");
+
+/* Others */
+@import url("https://maendisease.github.io/BetterDiscordStuff/css/NormalizedForums.css");
+
+:root {
+	/*
+    --font-primary: "";
+	--font-display: "";
+	--font-headline: "";
+	--font-code: ""; /* you should use a monospace font for this */
+}
+
+* {
+	font-variant-ligatures: none !important;
+}
+
+/* Fix code font */
+[class^="markdown-"] [class^="codeInline-"],
+[class^="codeLine-"],
+[class^="codeBlockText-"],
+[class^="durationTimeDisplay-"],
+[class^="durationTimeSeparator-"],
+[class*="after_inlineCode-"],
+[class*="before_inlineCode-"],
+[class^="inlineCode-"],
+code.inline,
+code,
+.hljs {
+	font-family: var(--font-code) !important;
+}
+
+/* Replace dashes with spaces in channel names */
+@font-face {
+	font-family: "Dashless";
+	src: url("https://vendicated.github.io/random-files/Dashless.woff2") format("woff2");
+}
+[data-list-item-id^=channels___] /* channel list */,
+[class^=titleWrapper] > h1 /* top bar with topic */,
+[class^=resultChannel] /* channel name in search */,
+[class^=channelMention] /* channel mentions in chat */,
+[class^=placeholder][class*=slateTextArea] /* "Send a message in #blah" */ {
+	font-family: "Dashless", var(--font-primary);
+}
+
+/* Unrestrict max width of message link previews */
+[class^=embedFull] > [class^=gridContainer] {
+	max-width: 100% !important;
+}
+
+/* Change logo */
+.wordmarkWindows-2dq6rw svg {
+	display: none;
+}
+.wordmarkWindows-2dq6rw::after {
+	content: "Lazuee";
+	display: block;
+	position: relative;
+	width: 200px;
+	height: 16px;
+	line-height: 16px;
+	font-family: var(--font-headline);
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--muted-text);
+}
+
+/* Channels border hover*/
+[class^="popout-"] [class^="row-"] {
+    background-color: transparent;
+}
+[aria-label="Channels"] [class^="content"],
+[class^="popout-"] [class^="row-"] {
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+}
+[aria-label="Channels"] [class^="content"]:hover,
+[class^="popout-"] [class^="row-"]:hover {
+    border-color: var(--interactive-hover);
+}
+
+/* Remove login artwork */
+svg.artwork-L5TAwQ {
+	display: none !important;
+	visibility: hidden !important;
+}
+
+/* Hide the emoji links */
+a[href^="https://cdn.discordapp.com/emojis/"] {
+	display: none;
+}
+
+/* Better alignment between user info panel and channel text area */
+[class^="sidebar-"] [class^="panels-"] {
+	margin: 16px;
+	border-radius: 8px;
+}
+[class^="sidebar-"] [class^="panels-"] [class^="container-"] {
+	border-radius: 8px;
+	align-items: center;
+	justify-content: space-between;
+}
+[class^="sidebar-"] [class^="panels-"] [class*="withTagAsButton-"] {
+	min-width: unset;
+}
+[class^="sidebar-"] [class^="panels-"] [class^="nameTag-"] [class*="title-"] {
+	max-width: 32pt;
+}
+[class^="channelTextArea-"] {
+	margin-bottom: 16px;
+}
+[class^="channelTextArea-"] [class^="scrollableContainer-"] {
+	display: flex;
+	align-items: center;
+	min-height: 52px;
+	flex-wrap: wrap;
+}
+[class^="channelTextArea-"] [class^="scrollableContainer-"] [class^="inner-"] {
+	display: flex;
+	width: 100%;
+}
+[class^="channelTextArea-"] [class^="scrollableContainer-"] ul[role="list"] {
+	flex-grow: 1;
+}
+
+/* Better Session list */
+.session-9khLqt {
+	background-color: var(--background-secondary);
+	border-radius: 8px;
+	padding: 12px 16px;
+	padding-left: 12px;
+	border-bottom: none;
+	margin-top: 16px;
+	gap: 12px;
+}
+.sessionIcon-2fwSzb {
+	color: var(--interactive-normal);
+	background: transparent;
+}
+
+/* Better Jump To Present button */
+[class*="jumpToPresentBar"] {
+  display: contents;
+}
+[class*="jumpToPresentBar"] > button:first-child {
+  display: none;
+}
+[class*="jumpToPresentBar"] > button:last-child {
+  position: absolute;
+  z-index: 1;
+  bottom: 24px;
+  right: 22px;
+  padding: 8px !important;
+  height: auto;
+  background-color: #5865F2;
+  box-shadow: var(--elevation-high);
+  border-radius: 100px;
+  display: flex;
+  font-size: 0px;
+  color: transparent;
+  transition: font-size .2s .1s, color .2s, padding .4s .1s;
+}
+[class*="jumpToPresentBar"] > button svg {
+  order: -1;
+  margin: 0px;
+  height: 24px;
+  width: 24px;
+  top: auto;
+  margin-right: 0px;
+  margin-left: 0px;
+  color: #FFFFFF;
+  transition: margin .6s;
+}
+[class*="jumpToPresentBar"]:hover > button {
+  padding: 8px 18px !important;
+  font-size: 14px;
+  color: #FFFFFF;
+  transition: font-size .2s, color .2s .1s, padding .4s;
+}
+[class*="jumpToPresentBar"]:hover > button svg {
+  margin-right: 2px;
+  margin-left: -6px;
+}
+
+/* Better Muted Channels icon */
+.modeMuted-2T4MDZ .icon-2W8DHg path { display: none; }
+.modeMuted-2T4MDZ .iconContainer-21RCa3{ position: relative; }
+.modeMuted-2T4MDZ .iconContainer-21RCa3:before {
+    content: "🔇";
+    position: absolute;
+    font-size: 20px;
+}
+
+/* Better React icon */
+path[d^="M12.1151 2.00065C12.0768 2.00022 12.0384 2 12 2C6.477 2 2 6.477 2 12C2 17.522 6.477 22 12 22C17.523 22 22 17.522 22 12C22 11.9616 21.9998 11.9232 21.9993 11.8849C21.1882 12.1737 20.3146 12.3309 19.4043 12.3309C15.1323 12.3309 11.6691 8.86771 11.6691 4.59565C11.6691 3.68536 11.8263 2.8118 12.1151 2.00065ZM7.92105 11.8023C7.92105 12.7107 7.18468 13.4471 6.27631 13.4471C5.36795 13.4471 4.63158 12.7107 4.63158 11.8023C4.63158 10.894 5.36795 10.1576 6.27631 10.1576C7.18467 10.1576 7.92105 10.894 7.92105 11.8023ZM10.5217 14.5171C10.3859 13.9893 9.84786 13.6716 9.32005 13.8074C8.79223 13.9433 8.47448 14.4813 8.61033 15.0091C9.01196 16.5695 10.4273 17.7236 12.1147 17.7236C13.8021 17.7236 15.2174 16.5695 15.6191 15.0091C15.7549 14.4813 15.4372 13.9433 14.9093 13.8074C14.3815 13.6716 13.8435 13.9893 13.7077 14.5171C13.525 15.2267 12.8797 15.7499 12.1147 15.7499C11.3497 15.7499 10.7044 15.2267 10.5217 14.5171Z"] {
+	d: path('m12 2c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10 5.523 0 10-4.478 10-10 0-0.0384 5e-4 -0.076283 0-0.11458-0.8111 0.2888-1.6861 0.44531-2.5964 0.44531-4.272 0-7.7344-3.4623-7.7344-7.7344 0-0.91029 0.15651-1.7852 0.44531-2.5964-0.0383-4.3e-4 -0.076183 0-0.11458 0zm-5.724 8.1589c0.90836 0 1.6458 0.73493 1.6458 1.6432 0 0.9084-0.73747 1.6458-1.6458 1.6458-0.90836 0-1.6432-0.73744-1.6432-1.6458 0-0.9083 0.73487-1.6432 1.6432-1.6432zm1.8438 5.5729c0.25251-0.015862 0.50575 0.10482 0.65625 0.30729 0.16198 0.27381 0.19805 0.62398 0.45833 0.84115 0.46684 0.49753 1.3278 0.49756 1.7969 0.002604 0.32446-0.24897 0.26914-0.72458 0.58333-0.97396 0.37809-0.34531 1.0417-0.15559 1.2031 0.32292 0.044428 0.30618 0.19507 0.59846 0.4349 0.79948 0.5078 0.4671 1.3751 0.3905 1.8047-0.14583 0.28002-0.28144 0.22165-0.77826 0.61458-0.96615 0.48615-0.31512 1.1969 0.12779 1.1406 0.70052-0.15245 0.89083-0.79763 1.6681-1.625 2.0208-1.039 0.47433-2.3482 0.20498-3.1224-0.63281-0.50839 0.48608-1.2025 0.77285-1.9062 0.78125-1.2196 0.029143-2.3898-0.83972-2.7135-2.0156-0.19722-0.46057 0.17468-1.0315 0.67448-1.0417z');
+}
+
+/*Better Forum Icon*/
+.iconWrapper-3FqQ75 { background-color: var(--background-accent); }
+[d="M6.56929 14.6869H2.34375C1.97079 14.6869 1.61311 14.5387 1.34938 14.275C1.08566 14.0113 0.9375 13.6536 0.9375 13.2806V8.12437C0.9375 6.38389 1.6289 4.7147 2.85961 3.484C4.09032 2.25329 5.75951 1.56189 7.49999 1.56189C9.24047 1.56189 10.9097 2.25329 12.1404 3.484C12.6953 4.03895 13.1406 4.68307 13.4623 5.38267C14.9101 5.5973 16.2513 6.29124 17.2655 7.36251C18.4194 8.58133 19.0625 10.1959 19.0625 11.8744V17.0306C19.0625 17.4036 18.9144 17.7613 18.6506 18.025C18.3869 18.2887 18.0292 18.4369 17.6563 18.4369H12.5C11.1428 18.4369 9.81899 18.0162 8.71072 17.2328C7.7871 16.58 7.05103 15.7019 6.56929 14.6869ZM4.18544 4.80982C5.06451 3.93075 6.25679 3.43689 7.49999 3.43689C8.74319 3.43689 9.93549 3.93075 10.8146 4.80983C11.6936 5.6889 12.1875 6.88119 12.1875 8.12439C12.1875 9.36759 11.6936 10.5599 10.8146 11.439C9.93549 12.318 8.74321 12.8119 7.50001 12.8119H7.20268C7.19767 12.8118 7.19266 12.8118 7.18764 12.8119H2.8125V8.12438C2.8125 6.88118 3.30636 5.6889 4.18544 4.80982ZM8.672 14.5814C8.97763 15.0132 9.35591 15.3928 9.79299 15.7017C10.5847 16.2614 11.5305 16.5619 12.5 16.5619H17.1875V11.8744C17.1875 10.6755 16.7281 9.52219 15.9039 8.65159C15.3804 8.09865 14.735 7.68644 14.027 7.44246C14.0506 7.66798 14.0625 7.89557 14.0625 8.12439C14.0625 9.86487 13.3711 11.5341 12.1404 12.7648C11.1896 13.7156 9.97697 14.3445 8.672 14.5814Z"] {
+	d: path( 'M4 32.2V6.1q0-.7.65-1.4T6 4h25.95q.75 0 1.4.675Q34 5.35 34 6.1v17.8q0 .7-.65 1.4t-1.4.7H12l-6.7 6.7q-.4.4-.85.2-.45-.2-.45-.7ZM14.05 36q-.7 0-1.375-.7T12 33.9V29h25V12h5q.7 0 1.35.7.65.7.65 1.45v28q0 .5-.45.7-.45.2-.85-.2L36.05 36Z');
+	transform: scale(0.4) translate(0px, 1px);
+}
+[d="M4.25892 16.5936C3.14073 14.7086 2.74913 12.4802 3.15765 10.3269C3.56618 8.17362 4.74672 6.24353 6.47761 4.89906C8.2085 3.55459 10.3707 2.88823 12.5581 3.02511C14.7455 3.16199 16.8077 4.0927 18.3575 5.64247C19.9073 7.19223 20.838 9.25445 20.9749 11.4419C21.1118 13.6293 20.4454 15.7915 19.101 17.5224C17.7565 19.2532 15.8264 20.4338 13.6731 20.8423C11.5198 21.2509 9.29146 20.8593 7.40646 19.7411L7.40648 19.741L4.29805 20.6291C4.16944 20.6659 4.03335 20.6676 3.90387 20.634C3.7744 20.6005 3.65625 20.5329 3.56167 20.4383C3.4671 20.3437 3.39953 20.2256 3.36598 20.0961C3.33243 19.9666 3.33412 19.8306 3.37086 19.7019L4.25898 16.5935L4.25892 16.5936Z"] {
+	d: path( 'M4 40.4V7q0-1.15.9-2.075Q5.8 4 7 4h34q1.15 0 2.075.925Q44 5.85 44 7v26q0 1.15-.925 2.075Q42.15 36 41 36H12l-5.45 5.45q-.7.7-1.625.325Q4 41.4 4 40.4Z');
+	transform: scale(0.5) translate(0px, 1px);
+	fill: currentColor;
+}
+
+/* Reveal the timestamp on messages when you hover */
+[class*=timestampInline-] {
+	opacity: 0;
+	transition: 0.2s opacity ease-in-out;
+}
+[class^=message-]:hover [class*=timestampInline-] {
+	opacity: 1;
+}
+
+/* Makes messages slide into chat */
+@keyframes slide-up {
+	0% {
+		opacity: 0;
+		transform: translateX(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateX(0px);
+	}
+}
+.message-2CShn3 {
+	animation: slide-up 0.6s ease;
+}
+
+/* Hide prompt to send a sticker when someone joins a server */
+[class*="welcomeCTA"] {
+	display: none;
+}
+
+/* Hide messages replying to system join messages (only stickers) */
+[class^=messageListItem]:has([id^=message-reply-context] > svg[class^=userJoinSystemMessageIcon]) {
+	display: none;
+}
+
+/* Vertical GoLive Selection Share */
+.sourceContainer-1uqUbz {
+	flex-direction: column;
+}
+.sourceName-3Wf8QG {
+	width: unset;
+}
+.tile-3POX2m > .flex-2S1XBF {
+	flex-direction: row;
+	justify-content: start;
+}
+.tile-3POX2m > .flex-2S1XBF > .flex-2S1XBF {
+	flex: unset !important;
+	margin-right: 16px;
+}
+
+/* Wide settings */
+[class*="standardSidebarView-"] [class*="contentColumn-"] {
+  max-width: 100%;
+}
+[class*="standardSidebarView-"] [class*="sidebarRegion-"] {
+  flex: 0;
+}
+
+/* WinButton */
+.platform-win .container-2RRFHK {
+	padding-top: 34px;
+	top: -34px;
+}
+.winButton-3UMjdg {
+	top: 0;
+	height: 34px;
+	width: 48px;
+}
+
+/* Fix emote message */
+img.emote {
+	text-indent: 0;
+	white-space: nowrap;
+	width: auto;
+	position: relative;
+	top: 0.25ex;
+}
+
+/* Makes disabled input button red */
+.container-1QtPKm:not(.checked-16gMAN) {
+	background-color: #f04747 !important;
+}
+.container-1QtPKm:not(.checked-16gMAN) path {
+	fill: #f04747 !important;
+}
+
+/* Makes enabled input button green*/
+.container-1QtPKm.checked-16gMAN {
+	background-color: #43b581 !important;
+}
+.container-1QtPKm.checked-16gMAN path {
+	fill: #43b581 !important;
+}
+
+/* Spotify Controls on hover */
+.vc-spotify-button-row {
+	height: 0;
+	opacity: 0;
+	transition: height .2s, opacity .02s;
+}
+#vc-spotify-player:hover .vc-spotify-button-row {
+	height: 32px;
+	opacity: 1;
+}
+
+/* Responsive container */
+@media screen and (min-width: 0px) and (max-width: 1200px) {
+	.membersWrap-3NUR2t {
+		display: none;
+	}
+	.selected-29KTGM {
+		display: none;
+	}
+	.toolbar-3_r2xA .clickable-ZD7xvu:nth-last-child(4) {
+		display: none;
+	}
+}
+@media screen and (min-width: 0px) and (max-width: 1100px) {
+	.toolbar-3_r2xA {
+		display: none;
+	}
+	.children-3xh0VB {
+		margin-right: 10px !important;
+	}
+}
+@media screen and (min-width: 0px) and (max-width: 1000px) {
+	.sidebar-1tnWFu {
+		display: none !important;
+		width: 0px !important;
+		margin-left: 0px !important;
+		padding: 0px !important;
+	}
+	.chat-2ZfjoI {
+		margin-left: 0px !important;
+	}
+}
+@media screen and (min-width: 0px) and (max-width: 900px) {
+	.sidebar-1tnWFu {
+		display: none;
+	}
+	.wrapper-1_HaEi {
+		display: none;
+	}
+	.container-2cd8Mz {
+		margin-left: 20px !important;
+	}
+}
+
+/* Modify display of edited tags from MessageLogger Plugin - Vencord */
+.messagelogger-edited time span {
+	font-size: 0;
+	line-height: 1;
+	user-select: none;
+}
+.messagelogger-edited time span:before {
+	font-size: 0.625rem;
+	content: "✏️  ";
+	filter: grayscale();
+	display: inline-block;
+	transform: scaleX(-1);
+}
