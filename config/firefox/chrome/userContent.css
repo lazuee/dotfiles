@@ -1,11 +1,6 @@
 /* ----- Included functions ----- */
-@import url("spill-style-part2-file.css");
-@import url("thin_scrollbar_windows10.css");
-@import url("style_1-wallpaper-edition.css");
-@import url("style_2-wallpaper-edition.css");
-@import url("style_3-wallpaper-edition.css");
-@import url("remove_homepage_shortcut_title_text.css");
-@import url("circular_homepage_shortcuts.css");
+@import url("./mods/circular_homepage_shortcuts.css");
+@import url("./mods/remove_homepage_shortcut_title_text.css");
 
 /* ----- My Custom Colors ----- */
 :root {
@@ -380,11 +375,11 @@ url("about:newtab") {
   main aside.content-container {
     display: none !important;
   }
-	
+
   #colorways {
     display: none !important;
   }
-	
+
   #tabpickup-tabs-container #synced-tabs-placeholder {
     background-color: var(--firefoxcss-item-bg-color) !important;
     border-radius: 8px !important;
