@@ -2,7 +2,7 @@
 [Environment]::SetEnvironmentVariable("USER", "$( $ENV:USERNAME )", "User")
 
 $PSDefaultParameterValues["Out-File:Encoding"] = "utf8"
-$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "SilentlyContinue"
 
 function Check-ScoopPackages {
     [CmdletBinding()]
@@ -65,7 +65,7 @@ function Check-ScoopPackages {
                         scoop install $appName --no-cache --skip --arch 64bit
                     }
                     elseif ($Force) {
-                        Write-Host "Updating app '$appName'..." -ForegroundColor Cyan
+                        Write-Host "Updating app '$( $appName )'..." -ForegroundColor Cyan
                         scoop update $appName --no-cache --skip
                     }
                 }
@@ -105,13 +105,20 @@ function Set-ScoopAlias {
         $currentCount++
 
 
-        Write-Host "($( $currentCount )/$( $totalCount )) - Adding scoop alias '$( $key )'..." -ForegroundColor Cyan
+        Write-Host "($( $currentCount )/$( $totalCount )) - Checking scoop alias '$( $key )'..." -ForegroundColor Cyan
 
-        if (scoop alias list | Select-String -SimpleMatch $key) {
-            scoop alias rm $key
+        try {
+            if (scoop alias list | Select-String -SimpleMatch $key) {
+                scoop alias rm $key
+            }
+
+            Write-Host "Adding alias '$( $key )'..."
+            scoop alias add $key "scoop $( $value )"
         }
-
-        scoop alias add $key "scoop $( $value )"
+        catch {
+            Write-Host "Error occurred while adding alias '$( $key )':" -ForegroundColor Yellow
+            Write-Host "--- | $( $_ )" -ForegroundColor Red
+        }
 
         Start-Sleep -Seconds 2
     }
@@ -275,40 +282,61 @@ function Download-File {
 $dotfiles_dir = "$( $HOME )\dotfiles"
 $dotfiles_url = "https://github.com/lazuee/dotfiles.git"
 
-if (-not (Test-Path $dotfiles_dir)) {
-    git clone --recurse-submodules $dotfiles_url $dotfiles_dir
-
-    if ($PSVersionTable.PSEdition -eq "Desktop") {
-        Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"cd $( $dotfiles_dir ); & .\setup.ps1`"" -Verb RunAs
-    } else {
-        Start-Process -FilePath "pwsh.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"cd $( $dotfiles_dir ); & .\setup.ps1`"" -Verb RunAs
-    }
-} else {
-    $remote_url = git config --get remote.origin.url
-    if ($remote_url -ne $dotfiles_url) {
-        Write-Host "The dotfiles folder is already initialized to a different git repo." -ForegroundColor Yellow
-        Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
-        Read-Host "Press Enter to exit setup..."
-
-        exit 1
-    } else {
-        git pull origin master
-        git submodule update --init --recursive
-    }
-}
-
 if (!(([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
-    Clear-Host
     Write-Host "Eyy, Lazuee here! You need to run this script as Administrator to proceed."
     Read-Host "Press Enter to continue setup..."
 
+    $script_dir = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $script_file = Split-Path -Leaf $MyInvocation.MyCommand.Path
+
     if ($PSVersionTable.PSEdition -eq "Desktop") {
-        Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"cd $( $dotfiles_dir ); & .\setup.ps1`"" -Verb RunAs
+        Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"Set-Location $( $script_dir ); & .\$( $script_file )`"" -Verb RunAs
     } else {
-        Start-Process -FilePath "pwsh.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"cd $( $dotfiles_dir ); & .\setup.ps1`"" -Verb RunAs
+        Start-Process -FilePath "pwsh.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -NoExit -Command `"Set-Location $( $script_dir ); & .\$( $script_file )`"" -Verb RunAs
     }
 
     exit 1
+}
+
+if (!(Test-Path $dotfiles_dir)) {
+    git clone --recurse-submodules $dotfiles_url $dotfiles_dir
+
+    Set-Location $dotfiles_dir
+    & .\setup.ps1
+} else {
+    $remote_url = git config --get remote.origin.url
+    $remote_url = git config --get remote.origin.url
+    $url_pattern = "^(https?|git)://[^\s/$.?#].[^\s]*$"
+
+    if ((Get-Location).Path -eq $dotfiles_dir) {
+        if ($remote_url -match $url_pattern) {
+            if ($remote_url -eq $dotfiles_url) {
+                Set-Location $dotfiles_dir
+
+                # git pull origin master
+                git submodule update --init --recursive
+                Clear-Host
+
+            } else {
+                Write-Host "The dotfiles folder is already initialized to a different git repo." -ForegroundColor Yellow
+                Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
+                Read-Host "Press Enter to exit setup..."
+
+                exit 1
+            }
+        } else {
+            Write-Host "The dotfiles folder is not initialized." -ForegroundColor Yellow
+            Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
+            Read-Host "Press Enter to exit setup..."
+
+            exit 1
+        }
+    } else {
+        Write-Host "Where did you go??? '$( (Get-Location).Path )'" -ForegroundColor Yellow
+        Read-Host "Press Enter to exit setup..."
+
+        exit 1
+    }
 }
 
 if (!(Test-Path "C:\tools")) {
@@ -408,7 +436,7 @@ w32tm /resync /force
 w32tm /query /status
 
 Write-Host "Setting Time zone..." -ForegroundColor Cyan
-Set-TimeZone -Name "Taipei Standard Time"
+Set-TimeZone -Name "Taipei Standard Time" # Change the value
 
 Write-Host "Optimizing wifi settings..." -ForegroundColor Cyan
 reg.exe add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v value /t REG_DWORD /d 0 /f > $null 2>&1
@@ -422,15 +450,15 @@ reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\System
 reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f > $null 2>&1
 reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f > $null 2>&1
 
-Write-Host"Enabling svhost split threshold..." -ForegroundColor Cyan
+Write-Host "Enabling svhost split threshold..." -ForegroundColor Cyan
 # (default)   380000   #
 #  4 GB      4194304   #    16 GB     16777216
 #  6 GB      6291456   #    24 GB     25165824
 #  8 GB      8388608   #    32 GB     33554432
 # 12 GB     12582912   #    64 GB     67108864
-reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control" /v SvcHostSplitThresholdInKB /t REG_DWORD /d 380000 /f > $null 2>&1
+reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control" /v SvcHostSplitThresholdInKB /t REG_DWORD /d 380000 /f > $null 2>&1 # Change the value
 
-# Write-Host "Enabling Hardware-Accelerated GPU Scheduling..." -ForegroundColor Cyan
+Write-Host "Enabling Hardware-Accelerated GPU Scheduling..." -ForegroundColor Cyan
 reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v HwSchMode /t REG_DWORD /d 2 /f > $null 2>&1
 
 Write-Host "Avoid rubbish folder grouping..." -ForegroundColor Cyan
@@ -457,13 +485,8 @@ if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
     if (Test-Path -Path "$( $HOME )\scoop") {
         Write-Host "Scoop is installed!" -ForegroundColor Green
         Read-Host "Press Enter to continue setup..."
-        if ($PSVersionTable.PSEdition -eq "Desktop") {
-            Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $PSCommandPath )`"" -Verb RunAs
-        } else {
-            Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $PSCommandPath )`"" -Verb RunAs
-        }
 
-        & .\setup.ps1
+        Set-Location $( $dotfiles_dir ); & .\setup.ps1
     } else {
         Write-Host "Scoop is not installed. Please install Scoop and run this script again." -ForegroundColor Red
         Read-Host "Press Enter to exit setup..."
@@ -509,8 +532,8 @@ Check-ScoopPackages -Type "app" -Packages @(
         git config --global push.default simple
         git config --global pull.rebase true
 
-        $git_username = "lazuee"
-        $git_email = "lazuee.dev@gmail.com"
+        $git_username = "lazuee" # Change the value
+        $git_email = "lazuee.dev@gmail.com" # Change the value
         $credential_helper = "manager"
         if ($PSVersionTable.PSVersion.Major -lt 7) {
             $credential_helper = "store"
@@ -630,7 +653,6 @@ Check-ScoopPackages -Type "app" -Packages @(
     @{Name = "nilesoft-shell"; Script = {}},
     @{Name = "autohotkey"; Script = {}}
 )
-
 
 Set-ScoopAlias -Alias @{
     "i" = "install $args[0]"
