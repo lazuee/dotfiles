@@ -24,8 +24,9 @@ if (-not (Test-Path $dotfiles_dir)) {
 
         exit 1
     } else {
-        git pull
-        git submodule update --init --recursive
+        git status > $null 2>&1
+        git pull origin master --quiet
+        git submodule update --init --recursive --quiet
     }
 }
 
