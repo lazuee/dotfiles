@@ -285,7 +285,6 @@ if (-not (Test-Path $dotfiles_dir)) {
     }
 } else {
     $remote_url = git config --get remote.origin.url
-    Write-Host "'$( $remote_url )' '$( $dotfiles_url )' $( $remote_url -ne $dotfiles_url )" -ForegroundColor Yellow
     if ($remote_url -ne $dotfiles_url) {
         Write-Host "The dotfiles folder is already initialized to a different git repo." -ForegroundColor Yellow
         Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
@@ -293,8 +292,8 @@ if (-not (Test-Path $dotfiles_dir)) {
 
         exit 1
     } else {
-        git pull origin master --quiet
-        git submodule update --init --recursive --quiet
+        git pull origin master
+        git submodule update --init --recursive
     }
 }
 
