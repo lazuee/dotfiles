@@ -2,7 +2,7 @@
 
 > My Personal dotfiles that I used in Windows 11
 
-## Links
+### Links
 
 Here are the links to the tools and modifications used in my dotfiles:
 
@@ -14,7 +14,7 @@ Here are the links to the tools and modifications used in my dotfiles:
 - [Komorebi](https://github.com/LGUG2Z/komorebi) - A tool used to add animated wallpapers to the Windows desktop.
 - [UltraUXThemePatcher](https://mhoefs.eu/software_uxtheme.php) - A tool used to patch the system files to enable third-party themes in Windows.
 
-## Themes
+### Themes
 
 I use the [Catppuccin Mocha Rosewater](https://github.com/niivu/Windows-11-themes/tree/main/Catppuccin) theme for Windows 11 22H2, and here are the links to the other themes I use:
 
