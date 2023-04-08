@@ -37,7 +37,14 @@ user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 
 // allow installing the unsigned search extensions.
 user_pref("xpinstall.signatures.required", false);
+user_pref("xpinstall.whitelist.required", false);
 user_pref("extensions.autoDisableScopes", 0);
+
+user_pref("extensions.pictureinpicture.enable_picture_in_picture_overrides", true);
+user_pref("extensions.webcompat.perform_ua_overrides", true);
+user_pref("extensions.webcompat.perform_injections", true);
+user_pref("extensions.webcompat.enable_shims", true);
+user_pref("extensions.ui.locale.hidden", true);
 
 /*** History ***/
 
@@ -174,6 +181,7 @@ user_pref("browser.sessionstore.restore_pinned_tabs_on_demand", false);
 // Make the theme work properly
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 user_pref("layout.css.moz-document.content.enabled", true);
+user_pref("layout.css.moz-outline-radius.enabled", true);
 user_pref("browser.proton.places-tooltip.enabled", true);
 user_pref("browser.uidensity", 2);
 
@@ -189,9 +197,13 @@ user_pref("browser.tabs.warnOnOpen", false);
 user_pref("browser.warnOnQuit", false);
 user_pref("browser.warnOnQuitShortcut", false);
 user_pref("browser.sessionstore.warnOnQuit", false);
-user_pref("browser.shell.checkDefaultBrowser", false);
 user_pref("full-screen-api.warning.delay", 0);
 user_pref("full-screen-api.warning.timeout", 0);
+
+// Disable default browser warning
+user_pref("browser.shell.didSkipDefaultBrowserCheckOnFirstRun", true);
+user_pref("browser.shell.checkDefaultBrowser", false);
+user_pref("browser.shell.defaultBrowserCheckCount", 1);
 
 // Disable autocopy
 user_pref("clipboard.autocopy", false);
@@ -231,11 +243,22 @@ user_pref("browser.download.manager.addToRecentDocs", false);
 user_pref("browser.download.hide_plugins_without_extensions", false);
 user_pref("browser.download.open_pdf_attachments_inline", true);
 
+user_pref("browser.safebrowsing.downloads.enabled", false);
+user_pref("browser.safebrowsing.downloads.remote.block_dangerous", false);
+user_pref("browser.safebrowsing.downloads.remote.block_dangerous_host", false);
+user_pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
+user_pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
+user_pref("browser.safebrowsing.downloads.remote.enabled", false);
+user_pref("browser.safebrowsing.malware.enabled", false);
+user_pref("browser.safebrowsing.phishing.enabled", false);
+user_pref("browser.safebrowsing.provider.google.updateURL", "");
+user_pref("browser.safebrowsing.provider.google4.dataSharingURL", "");
+user_pref("browser.safebrowsing.provider.google4.gethashURL", "");
+user_pref("browser.safebrowsing.provider.google4.updateURL", "");
+
 // Reader settings
 user_pref("reader.font_type", "serif");
 user_pref("reader.content_width", 7);
-user_pref("pdfjs.disabled", false);
-user_pref("browser.helperApps.showOpenOptionForPdfJS", true);
 
 // New tab settings
 user_pref("browser.newtabpage.activity-stream.showTopSites",false);
@@ -313,6 +336,7 @@ user_pref("network.http.pipelining", true);
 user_pref("network.http.proxy.pipelining", true);
 user_pref("network.http.pipelining.maxrequests", 10);
 user_pref("nglayout.initialpaint.delay", 0);
+user_pref("nglayout.initialpaint.delay_in_oopif", 0);
 
 // Disable SSDP
 user_pref("browser.casting.enabled", false);
@@ -367,9 +391,14 @@ user_pref("mousewheel.min_line_scroll_amount", 20);
 user_pref("toolkit.scrollbox.horizontalScrollDistance", 4);
 user_pref("toolkit.scrollbox.verticalScrollDistance", 5);
 
+// PDF
+user_pref("pdfjs.disabled", false);
+user_pref("pdfjs.enableScripting", false);
+user_pref("pdfjs.enabledCache.state", false);
+user_pref("browser.helperApps.showOpenOptionForPdfJS", true);
+
 // Others
-user_pref("layout.css.moz-outline-radius.enabled", true);
-user_pref("nglayout.initialpaint.delay", 0);
-user_pref("nglayout.initialpaint.delay_in_oopif", 0);
 user_pref("content.notify.interval", 100000);
 user_pref("browser.compactmode.show", true);
+user_pref("app.normandy.enabled", false);
+user_pref("app.normandy.first_run", false);
