@@ -1,8 +1,37 @@
 [Environment]::SetEnvironmentVariable("HOME", "$( $ENV:USERPROFILE )", "User")
 [Environment]::SetEnvironmentVariable("USER", "$( $ENV:USERNAME )", "User")
 
-$isElevated = ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-if (!($isElevated)) {
+$PSDefaultParameterValues["Out-File:Encoding"] = "utf8"
+$ErrorActionPreference = "Stop"
+
+$dotfiles_dir = "$( $HOME )\dotfiles"
+$dotfiles_repo = "https://github.com/lazuee/dotfiles.git"
+
+if (-not (Test-Path $dotfiles_dir)) {
+    git clone --recurse-submodules $dotfiles_repo $dotfiles_dir
+
+    if ($PSVersionTable.PSEdition -eq "Desktop") {
+        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
+    } else {
+        Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
+    }
+} else {
+    $remote_url = git config --get remote.origin.url
+    if ($remote_url -ne $dotfiles_repo) {
+        Write-Host "The dotfiles folder is already initialized to a different git repo." -ForegroundColor Yellow
+        Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
+        Read-Host "Press Enter to exit setup..."
+
+        exit 1
+    } else {
+        git pull
+        git submodule update --init --recursive
+    }
+}
+
+Set-Location $dotfiles_dir
+
+if (!(([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))) {
     Write-Host "Eyy, Lazuee here! You need to run this script as Administrator to proceed."
     Read-Host "Press Enter to continue setup..."
 
@@ -14,31 +43,6 @@ if (!($isElevated)) {
 
     exit 1
 }
-
-$dotfiles_dir = "$( $HOME )\dotfiles"
-$dotfiles_repo = "https://github.com/lazuee/dotfiles.git"
-
-if (-not (Test-Path $dotfiles_dir)) {
-    git clone $dotfiles_repo $dotfiles_dir
-
-    if ($PSVersionTable.PSEdition -eq "Desktop") {
-        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
-    } else {
-        Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
-    }
-} else {
-    Set-Location $dotfiles_dir
-    $remote_url = git config --get remote.origin.url
-    if ($remote_url -ne $dotfiles_repo) {
-        Write-Host "The dotfiles folder is already initialized to a different git repo." -ForegroundColor Yellow
-        Write-Host "Re-run the script after deleting the folder '$( $dotfiles_dir )'" -ForegroundColor Yellow
-        Read-Host "Press Enter to exit setup..."
-    } else {
-        git pull
-        git submodule update --init --recursive
-    }
-}
-
 
 function Check-ScoopPackages {
     [CmdletBinding()]
@@ -68,7 +72,7 @@ function Check-ScoopPackages {
                 $bucketName = $package.Name
                 $bucketScript = $package.Script
 
-                Clear-Host
+
                 Write-Host "($( $currentCount )/$( $totalCount )) - Checking scoop bucket '$( $bucketName )'..." -ForegroundColor Cyan
 
                 if (!(scoop bucket list | Select-String -SimpleMatch $bucketName)) {
@@ -92,7 +96,7 @@ function Check-ScoopPackages {
                 $appName = $package.Name
                 $appScript = $package.Script
 
-                Clear-Host
+
                 Write-Host "($( $currentCount )/$( $totalCount )) - Checking scoop app '$( $appName )'..." -ForegroundColor Cyan
 
                 try {
@@ -140,7 +144,7 @@ function Set-ScoopAlias {
         $value = $Alias[$key]
         $currentCount++
 
-        Clear-Host
+
         Write-Host "($( $currentCount )/$( $totalCount )) - Adding scoop alias '$( $key )'..." -ForegroundColor Cyan
 
         if (scoop alias list | Select-String -SimpleMatch $key) {
@@ -248,7 +252,7 @@ function Install-Fonts {
         if (Test-Path -Path $path) {
             $currentCount++
 
-            Clear-Host
+
             Write-Host "($( $currentCount )/$( $totalCount )) - installing fonts '$( (Split-Path $path -Leaf) )'..." -ForegroundColor Cyan
 
             $fonts_key = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" | Select-Object -ExpandProperty PSPath
@@ -308,6 +312,156 @@ function Download-File {
 
 }
 
+
+if (!(Test-Path "C:\tools")) {
+    New-Item -Path "C:\tools" -ItemType Directory | Out-Null
+}
+
+If (((Get-CimInstance Win32_OperatingSystem).BuildNumber) -gt 20000) {
+    if (!(Test-Path "C:\tools\DDN\DragDropNormalizer.exe")) {
+
+        Write-Host "Installing DragDropNormalizer..." -ForegroundColor Cyan
+        Download-File -Url "https://github.com/krlvm/DragDropNormalizer/releases/latest/download/DragDropNormalizer.zip" -Destination "C:\tools\DDN"
+
+        Create-Shortcut -FilePath "C:\tools\DDN\DragDropNormalizer.exe"
+        Start-Process -FilePath "C:\tools\DDN\DragDropNormalizer.exe"
+        Start-Sleep -Seconds 2
+    }
+
+    if (!(Test-Path "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe")) {
+
+        Write-Host "Installing Win11DisableOrRestoreRoundedCorners..." -ForegroundColor Cyan
+        Download-File -Url "https://github.com/valinet/Win11DisableRoundedCorners/releases/latest/download/Win11DisableOrRestoreRoundedCorners.exe" -Destination "C:\tools\DORRC"
+
+        Create-Shortcut -FilePath "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe"
+        Start-Process -FilePath "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe"
+        Start-Sleep -Seconds 2
+    }
+
+    if (!(Test-Path -Path "$( $ENV:LOCALAPPDATA )\StartAllBack")) {
+        if (!(Test-Path -Path "C:\Program Files\ExplorerPatcher\ep_setup.exe")) {
+
+                Write-Host "Installing ExplorerPatcher..." -ForegroundColor Cyan
+                Download-File -Url "https://github.com/valinet/ExplorerPatcher/releases/latest/download/ep_setup.exe"
+
+                Start-Process -FilePath "$( $ENV:TEMP )\ep_setup.exe" -ErrorAction SilentlyContinue
+                Start-Sleep -Seconds 25
+                Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue
+
+        }
+
+        if (Test-Path -Path "C:\Program Files\ExplorerPatcher\ep_setup.exe") {
+            Start-Sleep -Seconds 5
+            Write-Host "Fine-tuning ExplorerPatcher for an enhanced and efficient user experience..." -ForegroundColor Cyan
+            Fine-tuning Windows Explorer settings for an enhanced and efficient user experience...
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v OldTaskbar /t REG_DWORD /d 0 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v ClockFlyoutOnWinC /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v DisableWinFHotkey /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v StartDocked_DisableRecommendedSection /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectSystemToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectProgramsAndFeaturesToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectDateAndTimeToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
+            reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectNotificationIconsToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
+            Stop-Process -Name explorer -ErrorAction SilentlyContinue
+
+            Start-Sleep -Seconds 5
+            Start-Process explorer.exe
+            Start-Sleep -Seconds 3
+        }
+    } else {
+
+        Write-Host "StartAllBack is currently used, re-run the script after you uninstall and delete it." -ForegroundColor Yellow
+        Read-Host "Press Enter to continue..."
+    }
+
+    Write-Host "Optimizing Windows Explorer settings for a more streamlined experience..." -ForegroundColor Cyan
+
+    Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue
+    reg.exe add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v HideFileExt /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v AutoCheckSelect /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v LaunchTo /t REG_DWORD /d 1 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v DisableThumbnailCache /t REG_DWORD /d 1 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v DisableThumbsDBOnNetworkFolders /t REG_DWORD /d 1 /f > $null 2>&1
+
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableSnapbar /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableSnapAssistFlyout /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableTaskGroups /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v SnapAssist /t REG_DWORD /d 0 /f > $null 2>&1
+    reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v MultiTaskingAltTabFilter /t REG_DWORD /d 3 /f > $null 2>&1
+
+    Start-Sleep -Seconds 5
+    Start-Process explorer.exe
+    Start-Sleep -Seconds 2
+}
+
+Write-Host "Enabling long file paths..." -ForegroundColor Cyan
+reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f > $null 2>&1
+reg.exe add "HKCU\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f > $null 2>&1
+
+Write-Host "Enable Windows Developer Mode..." -ForegroundColor Cyan
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v AllowAllTrustedApps /t REG_DWORD /d 1 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /v AllowDevelopmentWithoutDevLicense /t REG_DWORD /d 1 /f > $null 2>&1
+
+Write-Host "Switching to dark mode..." -ForegroundColor Cyan
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name AppsUseLightTheme -Value 0
+Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name SystemUsesLightTheme -Value 0
+Write-Host "Dark theme enabled."
+
+Write-Host "Disabling feedback..." -ForegroundColor Cyan
+reg.exe add "HKCU\Software\Microsoft\Siuf\Rules" /v PeriodInNanoSeconds /t REG_DWORD /d 0 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Siuf\Rules" /v NumberOfSIUFInPe riod /t REG_DWORD /d 0 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v DoNotShowFeedbackNotifications /t REG_DWORD /d 1 /f > $null 2>&1
+
+Write-Host "Syncing time..." -ForegroundColor Cyan
+net stop w32time
+net start w32time
+w32tm /resync /force
+w32tm /query /status
+
+Write-Host "Setting Time zone..." -ForegroundColor Cyan
+Set-TimeZone -Name "Taipei Standard Time"
+
+Write-Host "Optimizing wifi settings..." -ForegroundColor Cyan
+reg.exe add "HKLM\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v value /t REG_DWORD /d 0 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config" /v AutoConnectAllowedOEM /t REG_DWORD /d 0 /f > $null 2>&1
+reg.exe add "HKCU\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v IRPStackSize /t REG_DWORD /d 2 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f > $null 2>&1
+
+Write-Host "Enhancing gaming performance..." -ForegroundColor Cyan
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d 8 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d 6 /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f > $null 2>&1
+reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f > $null 2>&1
+
+Write-Output "Enabling svhost split threshold..." -ForegroundColor Cyan
+# (default)   380000   #
+#  4 GB      4194304   #    16 GB     16777216
+#  6 GB      6291456   #    24 GB     25165824
+#  8 GB      8388608   #    32 GB     33554432
+# 12 GB     12582912   #    64 GB     67108864
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control" -Name "SvcHostSplitThresholdInKB" -Type DWord -Value 380000
+
+Write-Host "Enabling Hardware-Accelerated GPU Scheduling..." -ForegroundColor Cyan
+New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\GraphicsDrivers\" -Name 'HwSchMode' -Value '2' -PropertyType DWORD -Force
+
+Write-Host "Avoid rubbish folder grouping..." -ForegroundColor Cyan
+(gci 'HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\Shell\Bags' -s | ? PSChildName -eq '{885a186e-a440-4ada-812b-db871b942259}' ) | ri -Recurse
+
+Write-Host "Removing EPP context menu handlers..." -ForegroundColor Cyan
+reg.exe delete "HKCR\*\shellex\ContextMenuHandlers\EPP" /f > $null 2>&1
+reg.exe delete "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /f > $null 2>&1
+reg.exe delete "HKCR\Drive\shellex\ContextMenuHandlers\EPP" /f > $null 2>&1
+
+Write-Host "Removing Windows Meet Now icon from the taskbar..." -ForegroundColor Cyan
+reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarMn /t REG_DWORD /d 0 /f > $null 2>&1
+reg.exe add "HKLM\Software\Policies\Microsoft\Windows\Windows Chat" /v ChatIcon /t REG_DWORD /d 3 /f > $null 2>&1
+reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v HideSCAMeetNow /t REG_DWORD /d 1 /f > $null 2>&1
+
+Install-Fonts -Paths @(
+    "$( $dotfiles_dir )\tools\fonts\JetBrainsMono"
+)
+
 if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
     Write-Host "Scoop is not installed, wait for a moment..." -ForegroundColor Cyan
     iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
@@ -320,10 +474,12 @@ if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
         } else {
             Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $PSCommandPath )`"" -Verb RunAs
         }
+
         exit 1
     } else {
         Write-Host "Scoop is not installed. Please install Scoop and run this script again." -ForegroundColor Red
         Read-Host "Press Enter to exit setup..."
+
         exit 1
     }
 }
@@ -487,7 +643,7 @@ Check-ScoopPackages -Type "app" -Packages @(
     @{Name = "autohotkey"; Script = {}}
 )
 
-Clear-Host
+
 Set-ScoopAlias -Alias @{
     "i" = "install $args[0]"
     "add" = "install $args[0]"
@@ -506,110 +662,6 @@ Set-ScoopAlias -Alias @{
     "use" = "rs $args[0]"
 }
 
-Clear-Host
-Install-Fonts -Paths @(
-    "$( $dotfiles_dir )\tools\fonts\JetBrainsMono"
-)
-
-if (!(Test-Path "C:\tools")) {
-    New-Item -Path "C:\tools" -ItemType Directory | Out-Null
-}
-
-If (((Get-CimInstance Win32_OperatingSystem).BuildNumber) -gt 20000) {
-    if (!(Test-Path "C:\tools\DDN\DragDropNormalizer.exe")) {
-        Clear-Host
-        Write-Host "Installing DragDropNormalizer..." -ForegroundColor Cyan
-        Download-File -Url "https://github.com/krlvm/DragDropNormalizer/releases/latest/download/DragDropNormalizer.zip" -Destination "C:\tools\DDN"
-
-        Create-Shortcut -FilePath "C:\tools\DDN\DragDropNormalizer.exe"
-        Start-Process -FilePath "C:\tools\DDN\DragDropNormalizer.exe"
-        Start-Sleep -Seconds 2
-    }
-
-    if (!(Test-Path "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe")) {
-        Clear-Host
-        Write-Host "Installing Win11DisableOrRestoreRoundedCorners..." -ForegroundColor Cyan
-        Download-File -Url "https://github.com/valinet/Win11DisableRoundedCorners/releases/latest/download/Win11DisableOrRestoreRoundedCorners.exe" -Destination "C:\tools\DORRC"
-
-        Create-Shortcut -FilePath "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe"
-        Start-Process -FilePath "C:\tools\DORRC\Win11DisableOrRestoreRoundedCorners.exe"
-        Start-Sleep -Seconds 2
-    }
-
-    if (!(Test-Path -Path "$( $ENV:LOCALAPPDATA )\StartAllBack")) {
-        if (!(Test-Path -Path "C:\Program Files\ExplorerPatcher\ep_setup.exe")) {
-                Clear-Host
-                Write-Host "Installing ExplorerPatcher..." -ForegroundColor Cyan
-                Download-File -Url "https://github.com/valinet/ExplorerPatcher/releases/latest/download/ep_setup.exe"
-
-                Start-Process -FilePath "$( $ENV:TEMP )\ep_setup.exe" -ErrorAction SilentlyContinue
-                Start-Sleep -Seconds 25
-
-                Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v OldTaskbar /t REG_DWORD /d 0 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v ClockFlyoutOnWinC /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v DisableWinFHotkey /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v StartDocked_DisableRecommendedSection /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectSystemToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectProgramsAndFeaturesToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectDateAndTimeToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
-                reg.exe add "HKCU\Software\ExplorerPatcher" /v DoNotRedirectNotificationIconsToSettingsApp /t REG_DWORD /d 1 /f > $null 2>&1
-                Stop-Process -Name explorer -ErrorAction SilentlyContinue
-
-                Start-Sleep -Seconds 5
-                Start-Process explorer.exe
-                Start-Sleep -Seconds 2
-        }
-    } else {
-        Clear-Host
-        Write-Host "StartAllBack is currently used, re-run the script after you uninstall and delete it." -ForegroundColor Yellow
-        Read-Host "Press Enter to continue..."
-    }
-
-
-    # Disable bad multitasking features
-    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableSnapbar /t REG_DWORD /d 0 /f > $null 2>&1
-    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableSnapAssistFlyout /t REG_DWORD /d 0 /f > $null 2>&1
-    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v EnableTaskGroups /t REG_DWORD /d 0 /f > $null 2>&1
-    reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v SnapAssist /t REG_DWORD /d 0 /f > $null 2>&1
-    reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v MultiTaskingAltTabFilter /t REG_DWORD /d 3 /f > $null 2>&1
-}
-
-# Enable long paths
-reg.exe add "HKLM\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f >nul 2>nul
-reg.exe add "HKCU\SYSTEM\CurrentControlSet\Control\FileSystem" /v LongPathsEnabled /t REG_DWORD /d 1 /f >nul 2>nul
-
-# Disable feedback
-reg.exe add "HKCU\Software\Microsoft\Siuf\Rules" /v PeriodInNanoSeconds /t REG_DWORD /d 0 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\Siuf\Rules" /v NumberOfSIUFInPeriod /t REG_DWORD /d 0 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v DoNotShowFeedbackNotifications /t REG_DWORD /d 1 /f >nul 2>nul
-
-# Wi-Fi tweaks
-reg.exe add "HKLM\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots" /v value /t REG_DWORD /d 0 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\WcmSvc\wifinetworkmanager\config" /v AutoConnectAllowedOEM /t REG_DWORD /d 0 /f >nul 2>nul
-reg.exe add "HKCU\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" /v IRPStackSize /t REG_DWORD /d 2 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v NetworkThrottlingIndex /t REG_DWORD /d 4294967295 /f >nul 2>nul
-
-# Gaming tweaks
-reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "GPU Priority" /t REG_DWORD /d 8 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Priority" /t REG_DWORD /d 6 /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "Scheduling Category" /t REG_SZ /d "High" /f >nul 2>nul
-reg.exe add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile\Tasks\Games" /v "SFIO Priority" /t REG_SZ /d "High" /f >nul 2>nul
-
-# Remove Context Menu - Scan With Defender
-reg.exe delete "HKCR\*\shellex\ContextMenuHandlers\EPP" /f >nul 2>nul
-reg.exe delete "HKCR\Directory\shellex\ContextMenuHandlers\EPP" /f >nul 2>nul
-reg.exe delete "HKCR\Drive\shellex\ContextMenuHandlers\EPP" /f >nul 2>nul
-
-# Remove Windows Meet Now in Taskbar
-reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v TaskbarMn /t REG_DWORD /d 0 /f >nul 2>nul
-reg.exe add "HKLM\Software\Policies\Microsoft\Windows\Windows Chat" /v ChatIcon /t REG_DWORD /d 3 /f >nul 2>nul
-reg.exe add "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" /v HideSCAMeetNow /t REG_DWORD /d 1 /f >nul 2>nul
-
-# Disable " - Shortcut" text for shortcuts
-reg.exe add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" /v link /t REG_BINARY /d "00 00 00 00" /f >nul 2>nul
-
-Clear-Host
 Write-Host "Yey! it's don don don done!..." -ForegroundColor Green
 
 Start-Sleep -Seconds 2

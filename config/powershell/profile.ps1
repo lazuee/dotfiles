@@ -1,6 +1,8 @@
 [Environment]::SetEnvironmentVariable("HOME", "$( $ENV:USERPROFILE )", "User")
 [Environment]::SetEnvironmentVariable("USER", "$( $ENV:USERNAME )", "User")
 
+
+$PSDefaultParameterValues["Out-File:Encoding"] = "utf8"
 $ErrorActionPreference = "SilentlyContinue"
 
 function Load-Module ($m) {
