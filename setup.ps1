@@ -37,9 +37,9 @@ if (!(([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity
     Read-Host "Press Enter to continue setup..."
 
     if ($PSVersionTable.PSEdition -eq "Desktop") {
-        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $PSCommandPath )`"" -Verb RunAs
+        Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
     } else {
-        Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $PSCommandPath )`"" -Verb RunAs
+        Start-Process pwsh.exe "-NoProfile -ExecutionPolicy Bypass -File `"$( $dotfiles_dir )\setup.ps1`"" -Verb RunAs
     }
 
     exit 1
