@@ -298,6 +298,49 @@ if (!(([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity
     exit 1
 }
 
+if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
+    Write-Host "Scoop is not installed, wait for a moment..." -ForegroundColor Cyan
+    Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
+
+    if (Test-Path -Path "$( $HOME )\scoop") {
+        Write-Host "Scoop is installed!" -ForegroundColor Green
+        Read-Host "Press Enter to continue setup..."
+
+        Set-Location $dotfiles_dir
+        & .\setup.ps1
+    } else {
+        Write-Host "Scoop is not installed. Please install Scoop and run this script again." -ForegroundColor Red
+        Read-Host "Press Enter to exit setup..."
+
+        exit 1
+    }
+}
+
+if (!(Get-Command "7z.exe" -ErrorAction SilentlyContinue)) {
+    Check-ScoopPackages -Type "app" -Packages @(
+        @{Name = "7zip"; Script = {
+            $reg_path = "$( $HOME )\scoop\apps\7zip\current\install-context.reg"
+            if (Test-Path -Path $reg_path) {
+                Write-Host "Adding 7zip on Context Menu entries..." -ForegroundColor Cyan
+                regedit.exe /s $reg_path
+
+                reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v MenuIcons /t REG_DWORD /d 0 /f > $null 2>&1
+                reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v CascadedMenu /t REG_DWORD /d 1 /f > $null 2>&1
+                reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v ContextMenu /t REG_DWORD /d 292 /f > $null 2>&1
+            }
+        }}
+    )
+}
+
+if (!(Get-Command "git.exe" -ErrorAction SilentlyContinue)) {
+    Check-ScoopPackages -Type "app" -Packages @(
+        @{Name = "git"; Script = {
+            Set-Location $dotfiles_dir
+            & .\setup.ps1
+        }}
+    )
+}
+
 if (!(Test-Path $dotfiles_dir)) {
     git clone --recurse-submodules $dotfiles_url $dotfiles_dir
 
@@ -312,6 +355,35 @@ if (!(Test-Path $dotfiles_dir)) {
         if ($remote_url -match $url_pattern) {
             if ($remote_url -eq $dotfiles_url) {
                 Set-Location $dotfiles_dir
+
+                $gitconfig_path = "$( $HOME )\.gitconfig"
+                if (Test-Path -Path $gitconfig_path) {
+                    Write-Host "Deleting existing Git config file..." -ForegroundColor Cyan
+                    Remove-Item $gitconfig_path -Recurse -Force -ErrorAction SilentlyContinue
+                }
+
+                Write-Host "Setting up new Git config file..." -ForegroundColor Cyan
+                git config --global http.sslVerify false
+                git config --global core.autocrlf true
+                git config --global core.eol crlf
+                git config --global core.filemode false
+                git config --global color.ui true
+                git config --global push.default simple
+                git config --global pull.rebase true
+
+                $git_username = "lazuee" # Change the value
+                $git_email = "lazuee.dev@gmail.com" # Change the value
+                $credential_helper = "manager"
+                if ($PSVersionTable.PSVersion.Major -lt 7) {
+                    $credential_helper = "store"
+                }
+
+                git config --global user.name $git_username
+                git config --global user.email $git_email
+                git config --global credential.helper cache --timeout=3600
+                git config --global credential.helper $credential_helper
+
+                Link-Path -Path "$( $HOME )\.bashrc" -Target "$( $dotfiles_dir )\config\.bashrc";
 
                 # git pull origin master
                 git submodule update --init --recursive
@@ -478,23 +550,6 @@ Install-Fonts -Paths @(
     "$( $dotfiles_dir )\tools\fonts\JetBrainsMono"
 )
 
-if (!(Get-Command "scoop" -ErrorAction SilentlyContinue)) {
-    Write-Host "Scoop is not installed, wait for a moment..." -ForegroundColor Cyan
-    Invoke-Expression "& {$(Invoke-RestMethod get.scoop.sh)} -RunAsAdmin"
-
-    if (Test-Path -Path "$( $HOME )\scoop") {
-        Write-Host "Scoop is installed!" -ForegroundColor Green
-        Read-Host "Press Enter to continue setup..."
-
-        Set-Location $( $dotfiles_dir ); & .\setup.ps1
-    } else {
-        Write-Host "Scoop is not installed. Please install Scoop and run this script again." -ForegroundColor Red
-        Read-Host "Press Enter to exit setup..."
-
-        exit 1
-    }
-}
-
 Check-ScoopPackages -Type "bucket" -Packages @(
     @{Name = "main"; Script = {}},
     @{Name = "extras"; Script = {}},
@@ -503,49 +558,6 @@ Check-ScoopPackages -Type "bucket" -Packages @(
 )
 
 Check-ScoopPackages -Type "app" -Packages @(
-    @{Name = "7zip"; Script = {
-        $reg_path = "$( $HOME )\scoop\apps\7zip\current\install-context.reg"
-        if (Test-Path -Path $reg_path) {
-            Write-Host "Adding 7zip on Context Menu entries..." -ForegroundColor Cyan
-            regedit.exe /s $reg_path
-
-            reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v MenuIcons /t REG_DWORD /d 0 /f > $null 2>&1
-            reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v CascadedMenu /t REG_DWORD /d 1 /f > $null 2>&1
-            reg.exe add "HKCU\SOFTWARE\7-Zip\Options" /v ContextMenu /t REG_DWORD /d 292 /f > $null 2>&1
-        }
-
-        regedit.exe /s
-    }},
-    @{Name = "git"; Script = {
-        $gitconfig_path = "$( $HOME )\.gitconfig"
-        if (Test-Path -Path $gitconfig_path) {
-            Write-Host "Deleting existing Git config file..." -ForegroundColor Cyan
-            Remove-Item $gitconfig_path -Recurse -Force -ErrorAction SilentlyContinue
-        }
-
-        Write-Host "Setting up new Git config file..." -ForegroundColor Cyan
-        git config --global http.sslVerify false
-        git config --global core.autocrlf true
-        git config --global core.eol crlf
-        git config --global core.filemode false
-        git config --global color.ui true
-        git config --global push.default simple
-        git config --global pull.rebase true
-
-        $git_username = "lazuee" # Change the value
-        $git_email = "lazuee.dev@gmail.com" # Change the value
-        $credential_helper = "manager"
-        if ($PSVersionTable.PSVersion.Major -lt 7) {
-            $credential_helper = "store"
-        }
-
-        git config --global user.name $git_username
-        git config --global user.email $git_email
-        git config --global credential.helper cache --timeout=3600
-        git config --global credential.helper $credential_helper
-
-        Link-Path -Path "$( $HOME )\.bashrc" -Target "$( $dotfiles_dir )\config\.bashrc";
-    }},
     @{Name = "python"; Script = {
         $reg_path = "$( $HOME )\scoop\apps\python\current\install-pep-514.reg"
         if (Test-Path -Path $reg_path) {
