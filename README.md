@@ -11,7 +11,7 @@ Here are the links to the tools and modifications used in my dotfiles:
 - [DisableOrRestoreRoundedCorners](https://github.com/valinet/Win11DisableRoundedCorners) - A modification that disables the rounded corners on windows in Windows 11.
 - [DragDropNormalizer](https://github.com/krlvm/DragDropNormalizer) - A tool used to normalize drag and drop behavior across applications.
 - [DiscordClient Mod](https://github.com/Vendicated/Vencord) - A mod for the Discord desktop client, which can be used with Firefox Extension.
-- [Komorebi](https://github.com/LGUG2Z/komorebi) - A tool used to add animated wallpapers to the Windows desktop.
+- [Komorebi](https://github.com/LGUG2Z/komorebi) - A tool used to manage and arrange application windows on the screen of a Windows operating system.
 - [UltraUXThemePatcher](https://mhoefs.eu/software_uxtheme.php) - A tool used to patch the system files to enable third-party themes in Windows.
 
 ### Themes
