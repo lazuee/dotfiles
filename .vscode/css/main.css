@@ -1,0 +1,10 @@
+* {
+	font-family: "JetBrains Mono";
+	font-weight: 500 !important;
+}
+
+/* Hide the VSCode icon */
+.window-appicon {
+	opacity: 0 !important;
+	width: 4px !important;
+}

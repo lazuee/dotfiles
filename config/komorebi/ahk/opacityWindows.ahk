@@ -5,6 +5,12 @@ Persistent(true)
 
 #Include common.ahk
 
+; CONTROLS
+; #	Win (Windows logo key)
+; !	Alt
+; ^	Ctrl
+; +	Shift
+; &	An ampersand may be used between any two keys or mouse buttons to combine them into a custom hotkey.
 
 ; Increase Opacity, Alt + Win + WheelUp
 !#WheelUp::

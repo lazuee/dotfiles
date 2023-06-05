@@ -24,5 +24,9 @@
 		"key": "f12",
 		"command": "-editor.action.revealDefinition",
 		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+	},
+	{
+		"key": "ctrl+f7",
+		"command": "workbench.action.toggleActivityBarVisibility"
 	}
 ]

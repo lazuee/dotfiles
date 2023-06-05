@@ -7,13 +7,11 @@
  * @source https://github.com/lazuee/dotfiles
  * @invite He4UVdHmj5
  */
-
 /*  Catppuccin Theme  */
 @import url("https://raw.githack.com/catppuccin/discord/gh-pages/dist/catppuccin-mocha-rosewater.theme.css");
-
 /*  Replace Emojis/Icons  */
-@import url("https://lavender-discord.github.io/IconsaxDiscord/theme.css");
-@import url("https://crearts-community.github.io/Settings-Icons/clients/settings-icons.theme.css");
+/* @import url("https://lavender-discord.github.io/IconsaxDiscord/theme.css");
+@import url("https://crearts-community.github.io/Settings-Icons/clients/settings-icons.theme.css"); */
 @import url("https://crearts-community.github.io/Context-Icons/clients/betterdiscord.css");
 @import url("https://mwittrien.github.io/BetterDiscordAddons/Themes/EmojiReplace/base/Microsoft.css");
 
@@ -31,60 +29,59 @@
 /*  Thanks to Tnixc#6704 on Discord Catppuccin
     https://discord.com/channels/907385605422448742/1020555849372012635/1100425820780109914
     Makes Catppuccin Rosewater More Nice! not official 
-*/
-:root {
-  --header-primary: var(--text-normal) !important;
-  --header-secondary: var(--text-muted) !important;
-  --text-normal: #b1bae6 !important;
-  --text-muted: #565f89 !important;
-  --text-positive: hsl(89, calc(var(--saturation-factor, 1)*51%),61%) !important;
-  --text-warning: hsl(39, calc(var(--saturation-factor, 1)*66%), 64%) !important;
-  --text-danger: hsl(349, calc(var(--saturation-factor, 1)*89%), 72%) !important;
-  --text-link: hsl(217, calc(var(--saturation-factor, 1)*40%), 56%) !important;
-  --info-positive-background: hsla(89,calc(var(--saturation-factor, 1)*51%),61%,0.8) !important;
-  --info-positive-foreground: var(--text-positive) !important;
-  --info-warning-background: hsla(39,calc(var(--saturation-factor, 1)*66%),64%,0.8) !important;
-  --info-warning-foreground: var(--text-warning) !important;
-  --info-danger-background: hsla(349,calc(var(--saturation-factor, 1)*89%),72%,0.8) !important;
-  --info-danger-foreground: var(--text-danger) !important;
-  --status-danger: var(--text-danger) !important;
-  --status-warning: var(--text-warning) !important;
-  --status-positive: var(--text-positive) !important;
-  --status-positive-background: var(--info-positive-background) !important;
-  --status-warning-background: var(--info-warning-background) !important;
-  --status-danger-background: var(--info-danger-background) !important;
-  --interactive-normal: #5f647e !important;
-  --interactive-hover: #a2a6c2 !important;
-  --interactive-active: #b5bad1 !important;
-  --interactive-muted: #55576b !important; 
-  --channels-default: var(--text-muted) !important;
-  --background-primary: #1a1b26 !important;
-  --background-secondary: #171722 !important;
-  --background-secondary-alt: #13131a !important;
-  --background-tertiary: #16161e !important;
-  --background-accent: #434461 !important;
-  --background-floating: #161620 !important;
-  --background-modifier-hover: #212331c0 !important;
-  --background-modifier-active: #282a3680 !important;
-  --background-modifier-selected: #24263171 !important;
-  --background-modifier-accent: #1e1e29 !important;
-  --background-mentioned: #252836 !important;
-  --border-mentioned: #474c64 !important;
-  --background-mentioned-hover: #2f3344 !important;
-  --accent-color: #7aa2f7 !important;
-  --folder-color: #202332d0 !important;
-  --folder-color-light: #2f3342d0 !important;
-  --scrollbar-thin-thumb: transparent !important;
-  --scrollbar-thin-track: transparent !important;
-  --scrollbar-auto-thumb: #2b2b46af !important;
-  --scrollbar-auto-thumb-hover: #27273d85 !important;
-  --scrollbar-auto-track: transparent !important;
-  --scrollbar-auto-scrollbar-color-thumb: var(--scrollbar-auto-thumb) !important;
-  --scrollbar-auto-scrollbar-color-track: var(--scrollbar-auto-track) !important;
-  --channeltextarea-background: var(--background-secondary) !important;
-  --input-background: var(--background-secondary) !important;
-}
 
+:root {
+    --header-primary: var(--text-normal) !important;
+    --header-secondary: var(--text-muted) !important;
+    --text-normal: #b1bae6 !important;
+    --text-muted: #565f89 !important;
+    --text-positive: hsl(89, calc(var(--saturation-factor, 1)*51%), 61%) !important;
+    --text-warning: hsl(39, calc(var(--saturation-factor, 1)*66%), 64%) !important;
+    --text-danger: hsl(349, calc(var(--saturation-factor, 1)*89%), 72%) !important;
+    --text-link: hsl(217, calc(var(--saturation-factor, 1)*40%), 56%) !important;
+    --info-positive-background: hsla(89, calc(var(--saturation-factor, 1)*51%), 61%, 0.8) !important;
+    --info-positive-foreground: var(--text-positive) !important;
+    --info-warning-background: hsla(39, calc(var(--saturation-factor, 1)*66%), 64%, 0.8) !important;
+    --info-warning-foreground: var(--text-warning) !important;
+    --info-danger-background: hsla(349, calc(var(--saturation-factor, 1)*89%), 72%, 0.8) !important;
+    --info-danger-foreground: var(--text-danger) !important;
+    --status-danger: var(--text-danger) !important;
+    --status-warning: var(--text-warning) !important;
+    --status-positive: var(--text-positive) !important;
+    --status-positive-background: var(--info-positive-background) !important;
+    --status-warning-background: var(--info-warning-background) !important;
+    --status-danger-background: var(--info-danger-background) !important;
+    --interactive-normal: #5f647e !important;
+    --interactive-hover: #a2a6c2 !important;
+    --interactive-active: #b5bad1 !important;
+    --interactive-muted: #55576b !important;
+    --channels-default: var(--text-muted) !important;
+    --background-primary: #1a1b26 !important;
+    --background-secondary: #171722 !important;
+    --background-secondary-alt: #13131a !important;
+    --background-tertiary: #16161e !important;
+    --background-accent: #434461 !important;
+    --background-floating: #161620 !important;
+    --background-modifier-hover: #212331c0 !important;
+    --background-modifier-active: #282a3680 !important;
+    --background-modifier-selected: #24263171 !important;
+    --background-modifier-accent: #1e1e29 !important;
+    --background-mentioned: #252836 !important;
+    --border-mentioned: #474c64 !important;
+    --background-mentioned-hover: #2f3344 !important;
+    --accent-color: #7aa2f7 !important;
+    --folder-color: #202332d0 !important;
+    --folder-color-light: #2f3342d0 !important;
+    --scrollbar-thin-thumb: transparent !important;
+    --scrollbar-thin-track: transparent !important;
+    --scrollbar-auto-thumb: #2b2b46af !important;
+    --scrollbar-auto-thumb-hover: #27273d85 !important;
+    --scrollbar-auto-track: transparent !important;
+    --scrollbar-auto-scrollbar-color-thumb: var(--scrollbar-auto-thumb) !important;
+    --scrollbar-auto-scrollbar-color-track: var(--scrollbar-auto-track) !important;
+    --channeltextarea-background: var(--background-secondary) !important;
+    --input-background: var(--background-secondary) !important;
+} */
 * {
     font-variant-ligatures: none !important;
 }
@@ -528,4 +525,41 @@ img.emote {
     padding: 4px 10px;
     background-color: rgba(0, 0, 0, 0.25);
     border-radius: 6px;
+}
+
+/* fix publish button */
+[class^=button-][aria-label^=Publish] > [class^=separator-] {
+    display: none;
+}
+
+/* Match bottom and left borders on user profile container with their status - Border change by DeadVoxels, colour vars left over from Jaegerwald#4833's attempt to help me with this. Thanks a ton for getting me into advanced selectors so I could make this though, Jaeger! */
+:root {
+    --online-color: #23a559;
+    --idle-color: #f0b132;
+    --dnd-color: #f23f42;
+    --offline-color: #80848e;
+}
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Online"]) {
+    border-bottom: 3px solid var(--online-color)!important;
+}
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Idle"]) {
+    border-bottom: 3px solid var(--idle-color)!important;
+}
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Do Not Disturb"]) {
+    border-bottom: 3px solid var(--dnd-color)!important;
+}
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Invisible"]) {
+    border-bottom: 3px solid var(--offline-color)!important;
+}
+/* Darken pfp, name, and status text when in invis because why not */
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Invisible"]) .avatar-1EWyVD > svg > foreignObject,
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Invisible"]) .title-338goq,
+.container-YkUktl:has(.avatar-1EWyVD[aria-label*="Invisible"]) .subtext-2HDqJ7 {
+    filter: brightness(0.5);
+}
+.avatar-1EWyVD > svg > foreignObject,
+.title-338goq,
+.subtext-2HDqJ7,
+.container-YkUktl {
+    transition: all 100ms ease-in;
 }
