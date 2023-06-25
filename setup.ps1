@@ -177,7 +177,8 @@ if (!(Test-Command-Exists -Command "7z")) {
                 regedit.exe /s $reg_path
 
                 Set-ItemProperty-Verified -Path "HKCU:\SOFTWARE\7-Zip\Options" -Name MenuIcons -Type DWord -Value 0
-                Set-ItemProperty-Verified -Path "HKCU:\SOFTWARE\7-Zip\Options" -Name CascadedMenu -Type DWord -Value 1
+				# Uncomment this if you're not using Nilesoft Shell, because this will cause 7-zip to disappear in Context Menu
+                # Set-ItemProperty-Verified -Path "HKCU:\SOFTWARE\7-Zip\Options" -Name CascadedMenu -Type DWord -Value 1 
                 Set-ItemProperty-Verified -Path "HKCU:\SOFTWARE\7-Zip\Options" -Name ContextMenu -Type DWord -Value 292
             }
         }}
