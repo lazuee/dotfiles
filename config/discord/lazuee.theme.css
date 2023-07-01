@@ -545,42 +545,54 @@ img.emote {
 }
 
 /* Member list */
-[class*="membersWrap"] {
+[class*="membersWrap-"] {
 	min-width: 70px;
 }
-[class*="membersWrap"] [class*="members"] {
+[class*="membersWrap-"] [class*="members-"] {
 	width: 70px;
 	transition: width 0.5s ease-out;
 }
-[class*="membersWrap"]:hover [class*="members"] {
-	width: 180px;
+[class*="membersWrap-"]:hover [class*="members-"] {
+	width: 240px;
 	transition: width 0.5s ease-in;
 }
-[class*="membersWrap"] > [class*="members"] > [class*="content"] {
-	height: 100vh !important;
-}
-[class*="membersGroup"] {
+[class*="membersGroup-"] {
 	transition: height 0.3s ease-out, opacity 0.3s ease-out;
 	opacity: 0%;
 	height: 0px;
 }
-[class*="membersGroup"]:first-of-type {
+[class*="membersGroup-"]:first-of-type {
 	padding: 10px 8px 0px 16px;
 	transition: padding 0.3s ease-out;
 }
-[class*="membersGroup"]:not(:first-of-type) {
+[class*="membersGroup-"]:not(:first-of-type) {
 	padding: 0px 8px 0px 16px;
 	transition: padding 0.3s ease-out;
 }
-[class*="membersWrap"]:hover [class*="membersGroup"]:first-of-type {
+[class*="membersWrap-"]:hover [class*="membersGroup-"]:first-of-type {
 	transition: height 1.7s ease-in, opacity 1.8s ease-in, padding 1.5s ease-in;
 	opacity: 100%;
 	padding: 10px 8px 0px 16px !important;
 	height: 40px !important;
 }
-[class*="membersWrap"]:hover [class*="membersGroup"]:not(:first-of-type) { 
+[class*="membersWrap-"]:hover [class*="membersGroup-"]:not(:first-of-type) {
 	transition: height 1.7s ease-in, opacity 1.8s ease-in, padding 1.5s ease-in;
 	opacity: 100%;
 	padding: 25px 8px 0px 16px !important;
 	height: 40px !important;
+}
+[class*="content-"][aria-label="Members"] {
+	height: 100vh !important;
+}
+[class*="content-"][aria-label="Members"] > [class*="private-"] ~ div:last-child,
+[class*="content-"][aria-label="Members"] > [class*="divider-"],
+[class*="content-"][aria-label="Members"] > [class*="private-"] {
+	transition: opacity 0.3s ease-out;
+	opacity: 0%;
+}
+[class*="membersWrap-"]:hover [class*="content-"][aria-label="Members"] > [class*="private-"] ~ div:last-child,
+[class*="membersWrap-"]:hover [class*="content-"][aria-label="Members"] > [class*="divider-"],
+[class*="membersWrap-"]:hover [class*="content-"][aria-label="Members"] > [class*="private-"] {
+	transition: opacity 2.5s ease-in;
+	opacity: 100%;
 }
