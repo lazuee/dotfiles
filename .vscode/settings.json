@@ -1,31 +1,36 @@
 {
-	"http.proxySupport": "off",
-	"security.workspace.trust.enabled": false,
+	"update.mode": "start",
+	"update.showReleaseNotes": false,
 	"telemetry.telemetryLevel": "off",
-	"extensions.autoUpdate": true,
-	"extensions.ignoreRecommendations": false,
+	"http.proxySupport": "off",
 
-	"search.useGlobalIgnoreFiles": false,
-	"search.useIgnoreFiles": true,
+	// security
+	"security.workspace.trust.banner": "never",
+	"security.workspace.trust.startupPrompt": "never",
+	"security.workspace.trust.untrustedFiles": "open",
+	"security.workspace.trust.enabled": false,
+
+	// search
 	"search.exclude": {
-		"**/node_modules": true,
 		"**/dist": true,
-		"**/build": true,
-		"**/.next": true,
-		"**/.git": true,
-		"**/.env": true,
-		"Cargo.lock": true
+		"**/node_modules": true,
+		"**/pyenv": true,
+		"**/tmp": true,
+		"**/venv": true
 	},
 
+	// files
+	"files.enableTrash": true,
 	"files.saveConflictResolution": "overwriteFileOnDisk",
-	"files.maxMemoryForLargeFilesMB": 8000,
 	"files.autoSaveDelay": 100,
 	"files.exclude": {
-		"**/__pycache__": true,
-		"**/node_modules": true,
 		"**/.DS_Store": true,
+		"**/node_modules": true,
 		"**/.git": true,
-		"**/.next": true
+		"**/.next": true,
+		"**/venv": true,
+		"**/pyenv": true,
+		"**/__pycache__": true
 	},
 	"files.watcherExclude": {
 		"**/.cargo/**": true,
@@ -57,98 +62,122 @@
 		"Cargo.lock": "toml",
 		"yarn.lock": "yarnlock",
 		".yarnrc": "yarnlock",
-		"*.py[}]": "python"
+		"*.py[}]": "python",
+		".env*": "dotenv"
 	},
 
-	"git.autofetch": true,
-	"git.mergeEditor": true,
-	"git.confirmSync": false,
-	"git.detectSubmodules": true,
-	"git.ignoreSubmodules": false,
-	"git.enableSmartCommit": true,
-	"git.suggestSmartCommit": false,
-	"git.ignoreMissingGitWarning": true,
-	"git.showPushSuccessNotification": true,
-	"git.autoRepositoryDetection": "openEditors",
+	// theme
+	"workbench.iconTheme": "symbols",
+	"workbench.colorTheme": "Catppuccin Mocha",
 
-	"merge-conflict.codeLens.enabled": true,
-	"merge-conflict.autoNavigateNextConflict.enabled": false,
-	"merge-conflict.decorators.enabled": true,
-	"merge-conflict.diffViewPosition": "Below",
+	// font family
+	"editor.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"scm.inputFontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"terminal.integrated.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"chat.editor.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"debug.console.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"editor.codeLensFontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"notebook.output.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"markdown.preview.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"editor.inlayHints.fontFamily": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
 
-	"window.title": "${dirty}${activeEditorShort}${separator}Into the Moon 🚀🌙",
-	"window.restoreWindows": "one",
-	//"window.titleBarStyle": "native",
-	"window.menuBarVisibility": "hidden",
-	"window.newWindowDimensions": "inherit",
-	"window.customMenuBarAltFocus": false,
-	"window.enableMenuBarMnemonics": false,
-	"zenMode.fullScreen": false,
-	"breadcrumbs.enabled": true,
+	// font size
+	"terminal.integrated.fontSize": 14,
+	"editor.fontSize": 14,
+	"editor.tabSize": 2,
+	"editor.lineHeight": 1.5,
+
+	// general
+	"window.zoomLevel": -0.5,
+	"window.commandCenter": true,
+	"window.titleBarStyle": "custom",
+	"debug.toolBarLocation": "hidden",
+	"scm.diffDecorations": "none",
+	"diffEditor.useInlineViewWhenSpaceIsLimited": false,
+	"explorer.expandSingleFolderWorkspaces": false,
+	"explorer.incrementalNaming": "smart",
+	"explorer.decorations.badges": false,
+	"explorer.confirmPasteNative": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmDelete": false,
+	"explorer.compactFolders": true,
+	"explorer.autoRevealExclude": {
+		"**/node_modules": true,
+		"**/bower_components": true
+	},
+	"explorer.sortOrder": "type",
 	"breadcrumbs.filePath": "last",
-
+	"workbench.panel.defaultLocation": "right",
 	"workbench.startupEditor": "none",
-	"workbench.layoutControl.enabled": false,
+	"workbench.tree.renderIndentGuides": "always",
+	"workbench.tree.expandMode": "singleClick",
+	"workbench.tree.indent": 24,
+	"workbench.tips.enabled": false,
+	"workbench.list.openMode": "doubleClick",
 	"workbench.list.smoothScrolling": true,
-	"workbench.editor.wrapTabs": true,
 	"workbench.editor.limit.enabled": true,
-	"workbench.editor.limit.value": 5,
-	"workbench.editor.highlightModifiedTabs": true,
-	"workbench.editor.untitled.labelFormat": "name",
-	"workbench.editor.decorations.badges": true,
-	"workbench.editor.tabCloseButton": "off",
-	"workbench.editor.closeEmptyGroups": false,
-	"workbench.editor.decorations.colors": false,
-	"workbench.settings.editor": "json",
-	"references.preferredLocation": "view",
-
+	"workbench.editor.limit.perEditorGroup": true,
+	"workbench.editor.limit.value": 3,
+	"workbench.editor.enablePreviewFromQuickOpen": false,
+	"workbench.editor.enablePreview": false,
+	"workbench.editor.languageDetection": false,
+	"workbench.editor.splitInGroupLayout": "vertical",
 	"emmet.triggerExpansionOnTab": true,
+	"emmet.syntaxProfiles": {
+		"javascript": "jsx"
+	},
 	"emmet.includeLanguages": {
 		"javascript": "javascriptreact",
-		"typescript": "typescriptreact"
+		"typescript": "typescriptreact",
+		"javascriptreact": "javascriptreact",
+		"typescriptreact": "typescriptreact"
 	},
+	"typescript.tsserver.log": "off",
 
-	"explorer.decorations.badges": false,
-	"explorer.confirmDragAndDrop": false,
-	"explorer.excludeGitIgnore": true,
-	"explorer.compactFolders": false,
-	"explorer.confirmDelete": false,
-	"explorer.autoReveal": false,
-	"explorer.incrementalNaming": "smart",
-	"explorer.sortOrder": "type",
-	"explorer.openEditors.visible": 10,
+	// auto imports
+	"typescript.suggest.autoImports": true,
+	"javascript.suggest.autoImports": true,
 
-	"workbench.editor.enablePreview": false,
-	"workbench.editor.enablePreviewFromQuickOpen": false,
+	// auto update imports when moving file
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"javascript.updateImportsOnFileMove.enabled": "always",
 
-	// Don't show scrollbars
-	"editor.scrollbar.horizontal": "hidden",
-	"editor.scrollbar.vertical": "hidden",
-	"editor.scrollbar.horizontalScrollbarSize": 0,
-	"editor.scrollbar.verticalScrollbarSize": 0,
+	// quote styles
+	"javascript.preferences.quoteStyle": "double",
+	"typescript.preferences.quoteStyle": "double",
 
-	"editor.largeFileOptimizations": false,
-	"editor.stickyScroll.enabled": true,
-	"editor.minimap.enabled": false,
-	"editor.glyphMargin": false,
-	"editor.wordWrap": "off",
+	// inlayhints in TS/JS
+	"editor.inlayHints.fontSize": 12,
+	"typescript.inlayHints.enumMemberValues.enabled": true,
+	"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+	"typescript.inlayHints.parameterTypes.enabled": true,
+	"typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+	"typescript.inlayHints.parameterNames.enabled": "all",
 
-	"editor.occurrencesHighlight": true,
-	"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-	"editor.bracketPairColorization.enabled": true,
-	"editor.guides.bracketPairs": true,
-	"editor.guides.highlightActiveBracketPair": true,
-	"editor.unicodeHighlight.includeComments": true,
-	"editor.unicodeHighlight.nonBasicASCII": true,
-	"editor.hideCursorInOverviewRuler": true,
-	"editor.overviewRulerBorder": false,
+	// quick suggestion
+	"editor.tabCompletion": "on",
+	"editor.acceptSuggestionOnEnter": "smart",
+	"editor.acceptSuggestionOnCommitCharacter": false,
+	"editor.suggest.localityBonus": true,
+	"editor.wordBasedSuggestions": "currentDocument",
+	"editor.quickSuggestionsDelay": 10,
+	"editor.suggestSelection": "first",
+	"editor.snippetSuggestions": "inline",
+	"editor.suggest.insertMode": "replace",
+	"editor.suggestOnTriggerCharacters": true,
+	"editor.renderControlCharacters": true,
+	"editor.parameterHints.enabled": true,
+	"editor.suggest.showTypeParameters": true,
+	"editor.suggestFontSize": 14,
+	"editor.suggestLineHeight": 25,
 
+	// editor
+	"editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",<>./?",
+	"editor.gotoLocation.multipleImplementations": "goto",
+	"editor.gotoLocation.multipleTypeDefinitions": "goto",
 	"editor.gotoLocation.multipleDeclarations": "goto",
 	"editor.gotoLocation.multipleDefinitions": "goto",
-	"editor.gotoLocation.multipleImplementations": "goto",
 	"editor.gotoLocation.multipleReferences": "goto",
-	"editor.gotoLocation.multipleTypeDefinitions": "goto",
-	"editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-_",
 	"editor.accessibilitySupport": "off",
 	"editor.cursorSurroundingLines": 15,
 	"editor.smoothScrolling": true,
@@ -158,12 +187,28 @@
 	"editor.find.cursorMoveOnType": true,
 	"editor.scrollBeyondLastLine": false,
 	"editor.showFoldingControls": "always",
+	"editor.renderLineHighlight": "all",
+	"editor.fontLigatures": true,
+	"editor.largeFileOptimizations": false,
+	"editor.stickyScroll.enabled": true,
+	"editor.minimap.enabled": false,
+	"editor.wordWrap": "off",
+	"editor.bracketPairColorization.enabled": true,
+	"editor.guides.highlightActiveBracketPair": true,
+	"editor.unicodeHighlight.includeComments": true,
+	"editor.unicodeHighlight.nonBasicASCII": true,
+	"editor.copyWithSyntaxHighlighting": false,
 
+	// terminal
 	"terminal.integrated.defaultProfile.windows": "PowerShell",
 	"terminal.integrated.wordSeparators": " ()[]{}',\"`─‘’|",
 	"terminal.integrated.confirmOnExit": "never",
 	"terminal.integrated.copyOnSelection": true,
+	"terminal.integrated.hideOnStartup": "always",
 	"terminal.integrated.allowChords": false,
+	"terminal.integrated.tabs.enabled": false,
+	"terminal.integrated.tabs.focusMode": "singleClick",
+	"terminal.integrated.tabs.location": "left",
 	"terminal.integrated.drawBoldTextInBrightColors": false,
 	"terminal.integrated.enableMultiLinePasteWarning": false,
 	"terminal.integrated.localEchoLatencyThreshold": -1,
@@ -178,163 +223,100 @@
 		"workbench.action.gotoSymbol"
 	],
 
-	"screencastMode.keyboardShortcutsFormat": "commandWithGroup",
-	"screencastMode.keyboardOverlayTimeout": 3000,
-	"screencastMode.onlyKeyboardShortcuts": true,
+	// outline
+	"outline.icons": true,
+	"outline.problems.enabled": true,
+	"outline.problems.colors": false,
+	"outline.problems.badges": false,
+	"outline.collapseItems": "alwaysCollapse",
 
-	// Quick suggestions
-	"editor.tabCompletion": "on",
-	"editor.acceptSuggestionOnEnter": "smart",
-	"editor.acceptSuggestionOnCommitCharacter": false,
-	"editor.suggest.localityBonus": true,
-	"editor.wordBasedSuggestions": true,
-	"editor.quickSuggestionsDelay": 10,
-	"editor.suggestSelection": "first",
-	"editor.snippetSuggestions": "inline",
-	"editor.suggest.insertMode": "replace",
-	"editor.suggestOnTriggerCharacters": true,
-	"editor.renderControlCharacters": true,
-	"editor.parameterHints.enabled": true,
-	"editor.suggest.showTypeParameters": true,
-	"editor.suggestFontSize": 14,
-	"editor.suggestLineHeight": 25,
-
-	// Auto imports
-	"typescript.suggest.autoImports": true,
-	"javascript.suggest.autoImports": true,
-
-	// Auto update imports when moving file
-	"typescript.updateImportsOnFileMove.enabled": "always",
-	"javascript.updateImportsOnFileMove.enabled": "always",
-
-	// Quote styles
-	"javascript.preferences.quoteStyle": "double",
-	"typescript.preferences.quoteStyle": "double",
-
-	// Enabling inlayhints in TS/JS
-	"editor.inlayHints.fontSize": 12,
-	"typescript.inlayHints.enumMemberValues.enabled": true,
-	"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-	"typescript.inlayHints.parameterTypes.enabled": true,
-	"typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-	"typescript.inlayHints.parameterNames.enabled": "all",
-
-	// CSS Lint
-	"css.lint.unknownAtRules": "ignore",
-
-	// Prettier
-	"prettier.enable": true,
-	"prettier.jsxSingleQuote": false,
-	"prettier.bracketSpacing": true,
-	"prettier.bracketSameLine": true,
-	"prettier.useTabs": true,
-	"prettier.semi": true,
-	"prettier.tabWidth": 4,
-	"prettier.endOfLine": "lf",
-	"prettier.prettierPath": "./node_modules/prettier",
-	"prettier.printWidth": 120,
-	"prettier.requireConfig": true,
-	"prettier.withNodeModules": true,
-	"files.eol": "\n",
-	"files.autoGuessEncoding": true,
-	"files.trimFinalNewlines": true,
-	"files.trimTrailingWhitespace": true,
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
-	"editor.formatOnType": true,
-	"editor.formatOnPaste": true,
-
-	// Customize Discord Presence (Crawl)
-	"discord.swapBigAndSmallImage": true,
-	"discord.detailsIdling": "🔍 Searching the Archives...",
-	"discord.detailsEditing": "📂 {file_name}",
-	"discord.largeImageIdling": "🌚 Code, Coffee and Skyflakes",
-	"discord.lowerDetailsDebugging": "🔺 {git_branch}",
-	"discord.lowerDetailsEditing": "🗒️ line {current_line}:{current_column}", //"📂 {workspace}",
-	"discord.lowerDetailsIdling": "☕ Coffee time!",
-	"discord.lowerDetailsNoWorkspaceFound": "No workspace",
-	"discord.smallImage": "Eyy, stalker (👁👄👁)",
-
-	// AutoHotKey
-	"AutoHotkey2.InterpreterPath": "C:\\Users\\Admin\\scoop\\apps\\autohotkey\\2.0.2\\v2\\AutoHotkey64.exe",
-	"AutoHotkey2.DefaultDebugger": "zero-plusplus.vscode-autohotkey-debug",
-	"AutoHotkey2.ActionWhenV1IsDetected": "StopParsing",
-	"AutoHotkey2.AutoLibInclude": "User and Standard",
-	"AutoHotkey2.SymbolFoldingFromOpenBrace": true,
-	"AutoHotkey2.Diagnostics.ParamsCheck": true,
-	"AutoHotkey2.CompleteFunctionParens": true,
-	"AhkNekoHelp.CodeLens.showFuncReference": true,
-
-	// Python
-	"python.analysis.autoImportCompletions": false,
-	"python.analysis.typeCheckingMode": "basic",
-	"python.analysis.useLibraryCodeForTypes": true,
-	"python.experiments.optOutFrom": ["All"],
-	"python.defaultInterpreterPath": "python",
-	"python.formatting.provider": "black",
-	"python.formatting.blackArgs": ["--fast"],
-	"python.languageServer": "Pylance",
-	"python.linting.lintOnSave": true,
-	"python.linting.pylintCategorySeverity.refactor": "Information",
-	"python.showStartPage": false,
-	"python.terminal.activateEnvironment": false,
-	"python.venvFolders": [],
-
-	// Rust
-	"rust-analyzer.cargo.buildScripts.enable": true,
-	"rust-analyzer.cargo.features": "all",
-	"rust-analyzer.cargo.extraEnv": {
-		"CARGO_UNSTABLE_SPARSE_REGISTRY": "true"
+	// screencast mode
+	"screencastMode.keyboardOptions": {
+		"showKeys": true,
+		"showKeybindings": true,
+		"showCommands": false,
+		"showCommandGroups": true,
+		"showSingleEditorCursorMoves": true
 	},
-	"rust-analyzer.cargo.noDefaultFeatures": false,
-	"rust-analyzer.checkOnSave.allTargets": true,
-	"rust-analyzer.checkOnSave.command": "clippy",
-	"rust-analyzer.checkOnSave.enable": true,
-	"rust-analyzer.checkOnSave.extraArgs": ["--", "--warn=clippy::pedantic"],
-	"rust-analyzer.checkOnSave.features": "all",
-	"rust-analyzer.debug.engine": "vadimcn.vscode-lldb",
-	"rust-analyzer.debug.engineSettings": {
-		"lldb": {
-			"args": ["--nocapture", "--test-threads=1"],
-			"terminal": "console"
-		}
-	},
-	"rust-analyzer.debug.openDebugPane": true,
-	"rust-analyzer.diagnostics.useRustcErrorCode": false,
-	"rust-analyzer.diagnostics.warningsAsHint": [
-		"clippy::missing_panics_doc",
-		"clippy::missing_errors_doc",
-		"missing_docs",
-		"clippy::must_use_candidate"
-	],
-	"rust-analyzer.diagnostics.warningsAsInfo": ["clippy::pedantic"],
-	"rust-analyzer.imports.granularity.enforce": true,
-	"rust-analyzer.imports.granularity.group": "module",
-	"rust-analyzer.imports.group.enable": true,
-	"rust-analyzer.imports.prefix": "plain",
-	"rust-analyzer.inlayHints.lifetimeElisionHints.enable": "skip_trivial",
-	"rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": false,
-	"rust-analyzer.inlayHints.expressionAdjustmentHints.enable": "never",
-	"rust-analyzer.inlayHints.maxLength": 15,
-	"rust-analyzer.inlayHints.parameterHints.enable": true,
-	"rust-analyzer.inlayHints.typeHints.enable": true,
-	"rust-analyzer.procMacro.enable": true,
-	"rust-analyzer.runnableEnv": {
-		// Makes debugging test output much more readable
-		"RUST_TEST_THREADS": "1"
-	},
-	"rust-analyzer.runnables.extraArgs": [],
+	"screencastMode.verticalOffset": 0,
+	"screencastMode.keyboardOverlayTimeout": 500,
+	"screencastMode.mouseIndicatorColor": "#ff913d",
 
-	"workbench.colorTheme": "Catppuccin Mocha",
-	"workbench.iconTheme": "dot_colored",
-	"vscode_custom_css.imports": [
-		"file:///C:/Users/Admin/dotfiles/.vscode/css/main.css",
-		"file:///C:/Users/Admin/dotfiles/.vscode/css/rounded-corner.css"
+	// git
+	"git.autofetch": true,
+	"git.confirmSync": false,
+	"git.enableSmartCommit": true,
+	"git.untrackedChanges": "separate",
+	"git.mergeEditor": true,
+	"git.detectSubmodules": true,
+	"git.ignoreSubmodules": false,
+	"git.suggestSmartCommit": false,
+	"git.ignoreMissingGitWarning": true,
+	"git.showPushSuccessNotification": true,
+	"git.autoRepositoryDetection": "openEditors",
+
+	// extensions
+	"extensions.closeExtensionDetailsOnViewChange": true,
+	"extensions.confirmedUriHandlerExtensionIds": [],
+	"extensions.ignoreRecommendations": false,
+	"extensions.autoUpdate": true,
+
+	// code runner
+	"code-runner.executorMap": {
+		"sass": "sass --style expanded",
+		"scss": "scss --style expanded",
+		"javascript": "node",
+		"typescript": "ts-node",
+		"python": "python3 -u",
+		"java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+		"rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+		"php": "php",
+		"csharp": "scriptcs",
+		"c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+		"ahk": "autohotkey",
+		"shellscript": "bash",
+		"vbscript": "cscript //Nologo",
+		"powershell": "powershell -ExecutionPolicy ByPass -File",
+		"go": "go run",
+		"bat": "cmd /c",
+		"less": "cd $dir && lessc $fileName $fileNameWithoutExt.css"
+	},
+
+	// apc
+	"apc.font.family": "'GeistMono Nerd Font', 'Segoe Fluent Icons'",
+	"apc.monospace.font.family": "'GeistMono Nerd Font Mono', 'Segoe Fluent Icons'",
+	"apc.menubar.compact": false,
+	"apc.electron": {
+		"frame": false,
+		"titleBarStyle": "hidden"
+	},
+	"apc.activityBar": {
+		"hideSettings": true,
+		"position": "bottom",
+		"itemSize": 32,
+		"size": 30
+	},
+	"apc.statusBar": {
+		"fontSize": 10,
+		"height": 32,
+		"position": "editor-bottom"
+	},
+	"apc.listRow": {
+		"fontSize": 13,
+		"height": 26
+	},
+	"apc.header": {
+		"height": 33
+	},
+	"apc.imports": [
+		"/C:/Users/Admin/dotfiles/.vscode/css/main.css",
+		"/C:/Users/Admin/dotfiles/.vscode/css/screencast-mode.css"
 	],
 
+	// vsix manager
 	"vsix.debug": true,
 	"vsix.sources": {
-
 		"ms": {
 			"type": "marketplace",
 			"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"
@@ -346,18 +328,18 @@
 		}
 	},
 	"vsix.groups": {
-		"ui": ["ms:Catppuccin.catppuccin-vsc", "ms:anweber.dot-icons", "ms:be5invis.vscode-custom-css"],
-		"highlight": ["ms:shardulm94.trailing-spaces", "ms:IBM.output-colorizer", "ms:Dervex.universal-comments"],
+		"ui": ["ms:BeardedBear.beardedtheme", "ms:miguelsolorio.symbolss", "ms:drcika.apc-extension"],
+		"misc": ["ms:LeonardSSH.vscord"],
+		"highlight": ["ms:shardulm94.trailing-spaces", "ms:Dervex.universal-comments", "ms:IBM.output-colorizer"],
 		"formatter": [
-			"ms:WilliamRagstad.wr-docthis",
-			"ms:meganrogge.template-string-converter",
 			"ms:esbenp.prettier-vscode",
-			"ms:inferrinizzard.prettier-sql-vscode",
-			"ms:Cardinal90.multi-cursor-case-preserve"
+			"ms:meganrogge.template-string-converter",
+			"ms:WilliamRagstad.wr-docthis"
 		],
-		"debug": ["vsx:usernamehw.errorlens", "ms:WallabyJs.console-ninja", "ms:firefox-devtools.vscode-firefox-debug"],
+		"debug": ["vsx:usernamehw.errorlens", "ms:formulahendry.code-runner"],
 		"git": ["ms:andrii-bohdan.git-commit-wizard"],
 		"typescript": ["ms:yoavbls.pretty-ts-errors"],
+		"python": ["ms:ms-python.python", "ms:ms-python.vscode-pylance", "ms:ms-python.black-formatter"],
 		"ahk": [
 			"ms:zero-plusplus.vscode-autohotkey-debug",
 			"ms:thqby.vscode-autohotkey2-lsp",
@@ -368,8 +350,207 @@
 			"ms:TylerLeonhardt.vscode-inline-values-powershell",
 			"ms:vin-liberty.powershell-snippets"
 		],
-		"core": ["ui", "highlight", "formatter", "debug", "git"],
-		"languages": ["typescript", "ahk", "ps1"]
+		"core": ["ui", "misc", "highlight", "formatter", "debug", "git"],
+		"languages": [
+			"typescript",
+			"python"
+			//"ahk",
+			//"ps1"
+		]
 	},
-	"vsix.extensions": ["core", "languages"]
+	"vsix.extensions": ["core", "languages"],
+
+	// errorlens
+	"errorLens.statusBarIconsEnabled": true,
+	"errorLens.statusBarIconsUseBackground": false,
+	"errorLens.margin": "3ch",
+	"errorLens.enableOnDiffView": true,
+	"errorLens.enabledDiagnosticLevels": ["error", "warning", "hint", "info"],
+	"errorLens.messageEnabled": true,
+	"errorLens.messageBackgroundMode": "message",
+	"errorLens.messageTemplate": " ◩ $message ‎", // ▣ ◩ ◐
+	"errorLens.gutterIconsEnabled": true,
+	"errorLens.gutterIconSet": "squareRounded",
+
+	// discord rich presence
+	"vscord.app.name": "VSCodium",
+	"vscord.behavoiur.prioritizeLanguagesOverExtensions": true,
+	"vscord.status.idle.timeout": 600,
+	"vscord.status.details.text.idle": "💤 Idling",
+	"vscord.status.details.text.editing": "​In {workspace} {problems}",
+	"vscord.status.state.text.editing": "😻 Working on {file_name}:{current_line}:{current_column}",
+	"vscord.status.details.text.viewing": "In {workspace} {problems}",
+	"vscord.status.state.text.viewing": "Viewing {file_name}",
+	"vscord.status.details.text.debugging": "😻 Debugging {file_name}",
+	"vscord.status.state.text.debugging": "Debugging: {workspace}",
+	"vscord.status.buttons.button1.enabled": true,
+	"vscord.status.buttons.button1.git.active.enabled": false,
+	"vscord.status.buttons.button1.git.idle.enabled": false,
+	"vscord.status.buttons.button1.active.enabled": true,
+	"vscord.status.buttons.button1.active.label": "Follow Me",
+	"vscord.status.buttons.button1.active.url": "https://github.com/lazuee",
+	"vscord.status.buttons.button1.idle.enabled": true,
+	"vscord.status.buttons.button1.idle.label": "Follow Me",
+	"vscord.status.buttons.button1.idle.url": "https://github.com/lazuee",
+	"vscord.status.buttons.button1.inactive.enabled": true,
+	"vscord.status.buttons.button1.inactive.label": "Follow Me",
+	"vscord.status.buttons.button1.inactive.url": "https://github.com/lazuee",
+	"vscord.status.buttons.button2.enabled": true,
+	"vscord.status.buttons.button2.active.enabled": false,
+	"vscord.status.buttons.button2.idle.enabled": false,
+	"vscord.status.buttons.button2.inactive.enabled": false,
+	"vscord.status.buttons.button2.git.idle.enabled": true,
+	"vscord.status.buttons.button2.git.active.enabled": true,
+	"vscord.status.buttons.button2.git.active.label": "View Repository",
+	"vscord.status.buttons.button2.git.active.url": "{git_url}",
+	"vscord.status.buttons.button2.git.idle.label": "View Repository",
+	"vscord.status.buttons.button2.git.idle.url": "{git_url}",
+
+	// powershell
+	"powershell.buttons.showRunButtons": false,
+	"powershell.codeFormatting.alignPropertyValuePairs": false,
+	"powershell.codeFormatting.autoCorrectAliases": true,
+	"powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+	"powershell.codeFormatting.useCorrectCasing": true,
+	"powershell.codeFormatting.whitespaceInsideBrace": false,
+	"powershell.integratedConsole.showOnStartup": false,
+
+	// autohotkey
+	"AutoHotkey2.InterpreterPath": "C:\\Users\\Admin\\scoop\\apps\\autohotkey\\current\\v2\\AutoHotkey64.exe",
+	"AutoHotkey2.DefaultDebugger": "zero-plusplus.vscode-autohotkey-debug",
+	"AutoHotkey2.ActionWhenV1IsDetected": "StopParsing",
+	"AutoHotkey2.AutoLibInclude": "User and Standard",
+	"AutoHotkey2.SymbolFoldingFromOpenBrace": true,
+	"AhkNekoHelp.CodeLens.showFuncReference": true,
+	"AutoHotkey2.Diagnostics.ParamsCheck": true,
+	"AutoHotkey2.CompleteFunctionParens": true,
+
+	// python
+	"python.terminal.activateEnvInCurrentTerminal": true,
+	"python.defaultInterpreterPath": "python",
+	"python.languageServer": "Pylance",
+	"python.analysis.autoImportCompletions": true,
+	"python.analysis.completeFunctionParens": true,
+	"python.analysis.diagnosticSeverityOverrides": {
+		// none
+		"reportMatchNotExhaustive": "none",
+		"reportUnboundVariable": "none",
+		"reportSelfClsParameterName": "none",
+		"reportMissingParameterType": "none",
+		"reportUntypedFunctionDecorator": "none",
+		"reportOptionalCall": "none",
+		"reportMissingTypeArgument": "none",
+		"reportUnusedVariable": "none",
+		"reportUntypedBaseClass": "none",
+		"reportUnknownLambdaType": "none",
+		"reportUnknownVariableType": "none",
+		"reportMissingTypeStubs": "none",
+		"reportUnknownArgumentType": "none",
+		"reportGeneralTypeIssues": "none",
+		"reportUnknownMemberType": "none",
+		"reportUnknownParameterType": "none",
+		"reportOptionalSubscript": "none",
+		"reportOptionalMemberAccess": "none",
+		"reportFunctionMemberAccess": "none",
+		"reportInvalidStringEscapeSequence": "none",
+		"reportMissingImports": "none",
+		"reportConstantRedefinition": "none",
+		"reportOptionalIterable": "none",
+		"reportUnnecessaryIsInstance": "none",
+		"reportUnnecessaryComparison": "none",
+		"reportUnusedFunction": "none",
+		"reportUntypedClassDecorator": "none",
+		"reportPrivateImportUsage": "none",
+		"reportPrivateUsage": "none",
+		// warning
+		"reportUnusedImport": "warning",
+		// error
+		"reportMissingParameterDoc": "error"
+	},
+
+	// css
+	"css.validate": false,
+	"css.completion.completePropertyWithSemicolon": true,
+	"css.completion.triggerPropertyValueCompletion": true,
+	"css.lint.argumentsInColorFunction": "error",
+	"css.lint.unknownAtRules": "ignore",
+	"css.lint.boxModel": "warning",
+	"css.customData": [],
+
+	// tailwindcss
+	"tailwindCSS.emmetCompletions": true,
+	"tailwindCSS.experimental.classRegex": [
+		"tw`([^`]*)", // tw`...`
+		"tw=\"([^\"]*)", // <div tw="..." />
+		"tw={\"([^\"}]*)", // <div tw={"..."} />
+		"tw\\.\\w+`([^`]*)", // tw.xxx`...`
+		"tw\\(.*?\\)`([^`]*)" // tw(Component)`...`
+	],
+	"tailwindCSS.includeLanguages": {
+		"typescript": "javascript",
+		"typescriptreact": "javascript"
+	},
+
+	// prettier
+	"prettier.prettierPath": "C:/Users/Admin/scoop/persist/nodejs-lts/bin/node_modules/prettier/index.cjs",
+	"prettier.requireConfig": false,
+	"prettier.withNodeModules": true,
+	"prettier.jsxSingleQuote": false,
+	"prettier.bracketSpacing": true,
+	"prettier.bracketSameLine": true,
+	"prettier.useTabs": true,
+	"prettier.semi": true,
+	"prettier.tabWidth": 4,
+	"prettier.endOfLine": "lf",
+	"prettier.printWidth": 120,
+	"files.trimTrailingWhitespace": true,
+	"files.autoGuessEncoding": true,
+	"files.trimFinalNewlines": true,
+	"files.eol": "\n",
+
+	// formatter
+	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+	"javascript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+	"typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": false,
+	"javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+	"typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+	"editor.formatOnPaste": true,
+	"editor.formatOnSave": false,
+	"editor.formatOnType": false,
+	"[markdown]": {
+		"files.trimTrailingWhitespace": false
+	},
+	"[json][jsonc]": {
+		"editor.autoClosingBrackets": "always",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": false,
+		"editor.formatOnType": false
+	},
+	"[javascript][javascriptreact][typescript][typescriptreact]": {
+		"editor.autoClosingBrackets": "always",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true
+	},
+	"[html][css]": {
+		"editor.autoClosingBrackets": "always",
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true
+	},
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.black-formatter",
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": "explicit"
+		},
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true
+	},
+
+	// etc
+	"symbols.hidesExplorerArrows": true,
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"cody.commandCodeLenses": true,
+	"cody.autocomplete.formatOnAccept": true
 }

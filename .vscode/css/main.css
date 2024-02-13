@@ -1,10 +1,78 @@
-* {
-	font-family: "JetBrains Mono";
-	font-weight: 500 !important;
+/* remove overview ruler completely */
+.editor .decorationsOverviewRuler {
+  display: none !important;
 }
 
-/* Hide the VSCode icon */
-.window-appicon {
-	opacity: 0 !important;
-	width: 4px !important;
+/* make sticky widget fill the space left by the overview ruler */
+.editor .sticky-widget {
+  padding-right: 14px !important;
+}
+
+/* remove tabs-actions border right */
+.tabs-and-actions-container {
+  border-width: 0 0 1px 0;
+}
+
+/* remove all editor actions */
+.tabs-and-actions-container .editor-actions {
+  display: none !important;
+}
+
+/* remove tab border right and change their size to be flexiable */
+[role="tab"] {
+  border: 0 none !important;
+  flex: 1 1 auto;
+}
+
+/* remove vscode logo, vscode actionbar */
+.titlebar-left,
+.monaco-toolbar .menu-entry,
+.command-center .codicon-search {
+  display: none !important;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.sidebar > .composite {
+  height: 12px !important;
+}
+
+/* move window title to the left */
+[id="workbench.parts.titlebar"] > div {
+  display: none;
+  pointer-events: none;
+}
+.actions-container > li:nth-child(3) {
+  background: transparent !important;
+  border: 0 none !important;
+  font-size: 11px !important;
+  justify-content: flex-start !important;
+  margin: 0 !important;
+  padding-top: 3px;
+  text-align: left;
+}
+#workbench\.parts\.titlebar
+  > div
+  > div.titlebar-center
+  > div
+  > div
+  > div
+  > div
+  > ul
+  > li.action-item.command-center-center
+  > div
+  > div
+  > ul
+  > li
+  > span.search-label {
+  filter: brightness(2);
+}
+
+/* fix tabs full width background color when there are no open tabs */
+.tabs:has(.empty) {
+  background-color: transparent !important;
 }

@@ -1,32 +1,37 @@
 [
-	{
-		"key": "alt+left",
-		"command": "workbench.action.navigateBack"
-	},
-	{
-		"key": "ctrl+alt+-",
-		"command": "-workbench.action.navigateBack"
-	},
-	{
-		"key": "alt+right",
-		"command": "workbench.action.navigateForward"
-	},
-	{
-		"key": "ctrl+shift+-",
-		"command": "-workbench.action.navigateForward"
-	},
-	{
-		"key": "f4",
-		"command": "editor.action.revealDefinition",
-		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-	},
-	{
-		"key": "f12",
-		"command": "-editor.action.revealDefinition",
-		"when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
-	},
-	{
-		"key": "ctrl+f7",
-		"command": "workbench.action.toggleActivityBarVisibility"
-	}
+  {
+    "key": "escape",
+    "command": "notifications.hideToasts",
+    "when": "notificationToastsVisible"
+  },
+  {
+    "key": "escape",
+    "command": "closeReferenceSearch",
+    "when": "referenceSearchVisible"
+  },
+  {
+    "key": "escape",
+    "command": "removeSecondaryCursors",
+    "when": "editorHasMultipleSelections && textInputFocus"
+  },
+  {
+    "key": "escape",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "auxiliaryBarFocus || panelFocus || sideBarFocus"
+  },
+  {
+    "key": "escape",
+    "command": "list.closeFind",
+    "when": "listFocus && treeFindOpen"
+  },
+  {
+    "key": "escape",
+    "command": "notifications.hideList",
+    "when": "notificationCenterVisible"
+  },
+  {
+    //"when": "isDevelopment",
+    "key": "ctrl+shift+i",
+    "command": "workbench.action.toggleDevTools"
+  }
 ]
