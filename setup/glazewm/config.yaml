@@ -1,0 +1,246 @@
+rosewater: &rosewater "#f5e0dc"
+flamingo: &flamingo "#f2cdcd"
+pink: &pink "#f5c2e7"
+mauve: &mauve "#cba6f7"
+red: &red "#f38ba8"
+maroon: &maroon "#eba0ac"
+peach: &peach "#fab387"
+yellow: &yellow "#f9e2af"
+green: &green "#a6e3a1"
+teal: &teal "#94e2d5"
+sky: &sky "#89dceb"
+sapphire: &sapphire "#74c7ec"
+blue: &blue "#89b4fa"
+lavender: &lavender "#b4befe"
+text: &text "#cdd6f4"
+subtext1: &subtext1 "#bac2de"
+subtext0: &subtext0 "#a6adc8"
+overlay2: &overlay2 "#9399b2"
+overlay1: &overlay1 "#7f849c"
+overlay0: &overlay0 "#6c7086"
+surface2: &surface2 "#585b70"
+surface1: &surface1 "#45475a"
+surface0: &surface0 "#313244"
+base: &base "#1e1e2e"
+mantle: &mantle "#181825"
+crust: &crust "#1111b"
+
+gaps:
+  inner_gap: 10
+  outer_gap: 10
+
+
+general:
+  window_animations: true
+  cursor_follows_focus: false
+  focus_follows_cursor: false
+  show_floating_on_top: false
+  toggle_workspace_on_refocus: false
+  floating_window_move_amount: "5%"
+
+bar:
+  height: "30px"
+  position: "top"
+  opacity: 1.0
+  background: *base
+  foreground: *text
+  font_family: "GeistMono Nerd Font" # "Segoe UI"
+  font_size: "13px"
+  padding: "5px 6px"
+  offset_x: "0"
+  offset_y: "0"
+  component_separator:
+    label: "  "
+  components_left:
+    - type: "tiling direction"
+      label_horizontal: "<attr ff='Segoe Fluent Icons' fg='#a6e3a1'></attr>"
+      label_vertical: "<attr ff='Segoe Fluent Icons' fg='#a6e3a1'></attr>"
+      padding: "0 0px 0px 10px"
+    - type: "workspaces"
+      # current active workspace
+      focused_workspace_background: *mauve
+      focused_workspace_foreground: *crust
+      # inactive, but displayed on other monitor workspace
+      displayed_workspace_background: "transparent"
+      # inactive workspace
+      default_workspace_background: "transparent"
+  components_center:
+    - type: "window title"
+      label: "<attr ff='Segoe Fluent Icons' fg='#f5e0dc'></attr> {window_title}"
+  components_right:
+    - type: "weather"
+      foreground: *yellow
+      latitude: 6.9067
+      longitude: 122.0673
+      label: "{temperature_celsius}°C"
+      label_sun: "☀️ {temperature_celsius}°C"
+      label_moon: "🌙 {temperature_celsius}°C"
+      label_cloud_moon: "🌙☁️ {temperature_celsius}°C"
+      label_cloud_sun: "⛅ {temperature_celsius}°C"
+      label_cloud_moon_rain: "🌙🌧️ {temperature_celsius}°C"
+      label_cloud_sun_rain: "🌦️ {temperature_celsius}°C"
+      label_cloud_rain: "🌧️ {temperature_celsius}°C"
+      label_snow_flake: "❄️ {temperature_celsius}°C"
+      label_thunderstorm: "⚡ {temperature_celsius}°C"
+      label_cloud: "☁️ {temperature_celsius}°C"
+    - type: "volume"
+      label_low: "🔊 {volume_level}%"
+      label_medium: "🔊 {volume_level}%"
+      label_high: "🔊 {volume_level}%"
+      label_mute: "🔊 {volume_level}%"
+    - type: "network"
+      label_no_internet: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>Dsc"
+      label_ethernet: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>Eth"
+      label_wifi_strength0: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>0%"
+      label_wifi_strength25: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>25%"
+      label_wifi_strength50: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>50%"
+      label_wifi_strength75: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>75%"
+      label_wifi_strength100: "<attr ff='Segoe Fluent Icons' fg='#fab387'> </attr>100%"
+    - type: "clock"
+      # Documentation on formatting date/time string:
+      # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+      time_formatting: "hh:mm tt  ddd MMM d"
+
+workspaces:
+  - name: "1"
+    keep_alive: true
+    display_name: "Home"
+  - name: "2"
+    display_name: "Explorer"
+    keep_alive: true
+  - name: "3"
+    display_name: "Browser"
+    keep_alive: true
+  - name: "4"
+    display_name: "Social"
+    keep_alive: true
+  - name: "5"
+    display_name: "Editor"
+    keep_alive: true
+  - name: "6"
+    display_name: "Terminal"
+    keep_alive: true
+  - name: "7"
+    display_name: "Gaming"
+    keep_alive: true
+
+window_rules:
+  - command: "ignore"
+    match_process_name: "/OpenWith|Taskmgr|ScreenClippingHost|WinLister|7zFM|ShareX|AutoHotkeyUX/"
+
+  - command: "ignore"
+    match_title: "^(.*?)[Pp]icture-in-[Pp]icture(.*)"
+    match_class_name: "Chrome_WidgetWin_1|MozillaDialogClass"
+
+  - command: "set floating"
+    match_class_name: "#32770"
+
+  - command: "set floating"
+    match_process_name: "Skua"
+    match_title: "/^(?!.*[Ss]kua).*$/"
+
+  - command: "set floating"
+    match_process_name: "vivaldi"
+    match_title: "/^(?:[Vv]ivaldi Settings|DevTools).*$/"
+
+  - command: "resize borders 0px -7px -7px -7px"
+    match_process_name: "/steam|OUTLOOK|WINWORD|EXCEL/"
+
+  - commands: ["move to workspace 2", "focus workspace 2"]
+    match_process_name: "explorer"
+    match_class_name: "CabinetWClass"
+
+  - commands: ["resize borders 0px -6px -6px -6px", "move to workspace 3", "focus workspace 3"]
+    match_process_name: "vivaldi"
+    match_title: "/^(?![Vv]ivaldi Settings|DevTools).*$/"
+    match_class_name: "/^(?!#32770).*$/"
+
+  - commands: ["resize borders 0px 0px 0px 0px", "move to workspace 4", "focus workspace 4"]
+    match_process_name: "vivaldi"
+    match_title: "/^(Discord|Messenger).*(?![Vv]ivaldi)$/"
+    match_class_name: "/^(?!#32770).*$/"
+  - commands: ["move to workspace 4", "focus workspace 4"]
+    match_process_name: "whale"
+    match_title: "/^(Discord|Messenger).*(?![Ww]hale)$/"
+    match_class_name: "/^(?!#32770).*$/"
+  - commands: ["move to workspace 4", "focus workspace 4"]
+    match_process_name: "Vesktop"
+
+  - commands: ["move to workspace 3", "focus workspace 3"]
+    match_process_name: "whale"
+    match_title: "/(?:[Ww]hale)/"
+    match_class_name: "/^(?!#32770).*$/"
+
+  - commands: ["move to workspace 5", "focus workspace 5"]
+    match_process_name: "/VSCodium|WINWORD|EXCEL/"
+
+  - commands: ["move to workspace 6", "focus workspace 6"]
+    match_class_name: "ConsoleWindowClass"
+  - commands: ["move to workspace 6", "focus workspace 6"]
+    match_class_name: "CASCADIA_HOSTING_WINDOW_CLASS"
+
+  - commands: ["resize borders 0px -9px -9px -9px", "move to workspace 7", "focus workspace 7"]
+    match_process_name: "Skua"
+    match_title: "/^(?:.*[Ss]kua).*$/"
+  - commands: ["move to workspace 7", "focus workspace 7"]
+    match_process_name: "/[Ss]team|steamwebhelper|[Ee]pic/"
+
+keybindings: # https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys?view=windowsdesktop-8.0
+  - command: "resize width -2%"
+    binding: "Alt+Left"
+  - command: "resize width +2%"
+    binding: "Alt+Right"
+  - command: "resize height +2%"
+    binding: "Alt+Up"
+  - command: "resize height -2%"
+    binding: "Alt+Down"
+
+  - command: "focus workspace 1"
+    binding: "Alt+1"
+  - command: "focus workspace 2"
+    binding: "Alt+2"
+  - command: "focus workspace 3"
+    binding: "Alt+3"
+  - command: "focus workspace 4"
+    binding: "Alt+4"
+  - command: "focus workspace 5"
+    binding: "Alt+5"
+  - command: "focus workspace 6"
+    binding: "Alt+6"
+  - command: "focus workspace 7"
+    binding: "Alt+7"
+
+  - command: "move to workspace 1"
+    binding: "Alt+Shift+1"
+  - command: "move to workspace 2"
+    binding: "Alt+Shift+2"
+  - command: "move to workspace 3"
+    binding: "Alt+Shift+3"
+  - command: "move to workspace 4"
+    binding: "Alt+Shift+4"
+  - command: "move to workspace 5"
+    binding: "Alt+Shift+5"
+  - command: "move to workspace 6"
+    binding: "Alt+Shift+6"
+  - command: "move to workspace 7"
+    binding: "Alt+Shift+7"
+
+  - command: "tiling direction toggle"
+    binding: "Alt+V"
+  - command: "focus mode toggle"
+    binding: "Alt+Space"
+  - command: "toggle floating"
+    binding: "Alt+Shift+Space"
+
+  - command: "focus workspace recent"
+    binding: "Alt+OemPipe"
+  - command: "focus workspace prev"
+    binding: "Alt+OemOpenBrackets"
+  - command: "focus workspace next"
+    binding: "Alt+OemCloseBrackets"
+
+  - command: "close"
+    binding: "Alt+Shift+Q"
+
+  - command: "exec %UserProfile%/scoop/apps/windows-terminal/current/wt.exe"
+    binding: "Alt+Enter"

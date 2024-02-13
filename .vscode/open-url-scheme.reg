@@ -1,0 +1,46 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\codium]
+"URL Protocol"=""
+@="URL:codium"
+
+[HKEY_CLASSES_ROOT\codium\shell]
+
+[HKEY_CLASSES_ROOT\codium\shell\open]
+
+[HKEY_CLASSES_ROOT\codium\shell\open\command]
+@="\"C:\\Users\\Admin\\scoop\\apps\\vscodium\\current\\VSCodium.exe\" \"--open-url\"  \"--\" \"%1\""
+
+[HKEY_CLASSES_ROOT\vscodium]
+"URL Protocol"=""
+@="URL:vscodium"
+
+[HKEY_CLASSES_ROOT\vscodium\shell]
+
+[HKEY_CLASSES_ROOT\vscodium\shell\open]
+
+[HKEY_CLASSES_ROOT\vscodium\shell\open\command]
+@="\"C:\\Users\\Admin\\scoop\\apps\\vscodium\\current\\VSCodium.exe\" \"--open-url\"  \"--\" \"%1\""
+
+[HKEY_CLASSES_ROOT\code]
+"URL Protocol"=""
+@="URL:code"
+
+[HKEY_CLASSES_ROOT\code\shell]
+
+[HKEY_CLASSES_ROOT\code\shell\open]
+
+[HKEY_CLASSES_ROOT\code\shell\open\command]
+@="\"C:\\Users\\Admin\\scoop\\apps\\vscodium\\current\\VSCodium.exe\" \"--open-url\"  \"--\" \"%1\""
+
+[HKEY_CLASSES_ROOT\vscode]
+"URL Protocol"=""
+@="URL:vscode"
+
+[HKEY_CLASSES_ROOT\vscode\shell]
+
+[HKEY_CLASSES_ROOT\vscode\shell\open]
+
+[HKEY_CLASSES_ROOT\vscode\shell\open\command]
+@="\"C:\\Users\\Admin\\scoop\\apps\\vscodium\\current\\VSCodium.exe\" \"--open-url\"  \"--\" \"%1\""
+
