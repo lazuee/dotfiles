@@ -4,7 +4,7 @@
 
 > [!NOTE]
 > This repository is a new version of my old dotfiles.  
-> old versions of the dotfiles can be found in the [archive branch](https://github.com/lazuee/dotfiles/tree/archive).
+> old versions of the dotfiles can be found in the [archived branch](https://github.com/lazuee/dotfiles/tree/archived).
 
 ### Star the project 🌟
 
