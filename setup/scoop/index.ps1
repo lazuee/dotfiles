@@ -88,12 +88,12 @@ function InstallPython {
         regedit.exe /s $regPath
     }
 
-    $folderPath = "$( $ENV:USERPROFILE )\AppData\Roaming\Python\Python312\Scripts"
-    $path = [Environment]::GetEnvironmentVariable("Path", "User")
-    if (-not ($path.Contains($folderPath))) {
-        $newPath = $path + ";" + $folderToAdd
-        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
-    }
+    # $folderPath = "$( $ENV:USERPROFILE )\AppData\Roaming\Python\Python312\Scripts"
+    # $path = [Environment]::GetEnvironmentVariable("Path", "User")
+    # if (-not ($path.Contains($folderPath))) {
+    #     $newPath = $path + ";" + $folderToAdd
+    #     [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    # }
 
     python.exe -m pip install pip --upgrade --no-cache-dir
     python.exe -m pip install black --upgrade --no-cache-dir
