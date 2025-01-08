@@ -1,0 +1,68 @@
+ .monaco-workbench .quick-input-list .quick-input-list-entry.has-actions:hover .quick-input-list-entry-action-bar .action-label.dirty-workspace::before {
+	content: var(--vscode-icon-x-content);
+	font-family: var(--vscode-icon-x-font-family);
+}
+
+.monaco-workbench .screencast-mouse {
+	position: absolute;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 50%;
+	z-index: 100000;
+	content: ' ';
+	pointer-events: none;
+	display: none;
+}
+
+.monaco-workbench:not(.reduce-motion) .screencast-keyboard {
+  transition: opacity 0.3s ease-out;
+}
+
+.monaco-workbench .screencast-keyboard:empty {
+  opacity: 0;
+}
+
+.monaco-workbench .screencast-keyboard {
+  position: absolute;
+  background-color: transparent !important;
+  width: 100%;
+  left: 0px !important;
+  z-index: 100000;
+  pointer-events: none;
+  color: hsla(0, 0%, 100%, 0.6) !important;
+  text-align: left;
+  overflow: visible !important;
+  text-overflow: ellipsis;
+  font-size: 16px !important;
+  font-family: "Pretendard", sans-serif !important;
+  line-height: 1.5em !important;
+  user-select: text;
+  -webkit-user-select: text;
+  white-space: var(--vscode-hover-whiteSpace, normal) !important;
+  display: flex !important;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.monaco-workbench .screencast-keyboard > .key {
+  margin-left: 38px;
+  border: 1px solid var(--vscode-editorHoverWidget-border)!important;
+  background-color: var(--vscode-editorHoverWidget-background)!important;
+  padding: 8px!important;
+  transition: all 78ms !important;
+  border-radius: 6px !important;
+  box-shadow: 0px 0px 22px -2px rgba(12, 13, 17, 0.2) !important;
+  backdrop-filter: blur(3px)!important;
+}
+
+.monaco-workbench .screencast-keyboard > .title {
+  font-weight: 300;
+  position: absolute!important;
+  width: calc(100% - 10%) !important;
+  bottom: 10% !important;
+  text-align: center;
+  transform: translateY(-50%) !important;
+  z-index: 999;
+  opacity: 0!important;
+}

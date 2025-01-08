@@ -1,0 +1,13 @@
+[Unit]
+Name = "desktop"
+Description = "everything I need to work on Windows"
+Requires = ["komorebi", "yasb"]
+
+[Service]
+Kind = "Oneshot"
+Autostart = true
+Restart = "Never"
+
+[Service.ExecStart]
+Executable = "cmd.exe"
+Arguments = ["/c echo Running in the background..."]

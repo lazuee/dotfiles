@@ -1,0 +1,18 @@
+[Unit]
+Name = "taskbar-toggle"
+Description = "Toggle auto-hide for Windows Taskbar"
+
+[Service]
+Kind = "Simple"
+Restart = "Never"
+
+[Service.ExecStart]
+Executable = "powershell.exe"
+Arguments = ["-NoProfile", "-Command", "$key='HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StuckRects3'; $s=(gp $key).Settings; $s[8]=$s[8]-bor 1; sp $key Settings $s; taskkill /f /im explorer.exe; start explorer.exe; Start-Sleep -Seconds 3; exit 0"]
+
+[[Service.ExecStop]]
+Executable = "powershell.exe"
+Arguments = ["-NoProfile", "-Command", "$key='HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StuckRects3'; $s=(gp $key).Settings; $s[8]=$s[8]-band 0xFE; sp $key Settings $s; taskkill /f /im explorer.exe; start explorer.exe; Start-Sleep -Seconds 3; exit 0"]
+
+[Service.Healthcheck.Process]
+DelaySec = 2

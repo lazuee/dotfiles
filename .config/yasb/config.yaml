@@ -1,0 +1,245 @@
+watch_stylesheet: true
+watch_config: true
+debug: false
+hide_taskbar: false
+komorebi:
+  start_command: "komorebic start --whkd"
+  stop_command: "komorebic stop --whkd"
+  reload_command: "komorebic stop --whkd && komorebic start --whkd"
+bars:
+  top-bar:
+    enabled: true
+    screens: ['*']
+    class_name: "yasb-bar top"
+    alignment:
+      position: "top"
+      center: false
+    blur_effect:
+      enabled: false
+      acrylic: false
+      dark_mode: false
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 38
+    padding:
+      top: 12
+      left: 16
+      bottom: 8
+      right: 16
+    widgets:
+      left:
+        [
+          "komorebi_workspaces",
+          "komorebi_active_layout",
+          traffic
+        ]
+      center: [
+        active_window
+      ]
+      right:
+        [
+        ]
+  bottom-bar:
+    enabled: true
+    screens: ['*']
+    class_name: "yasb-bar bottom"
+    alignment:
+      position: "bottom"
+      center: false
+    blur_effect:
+      enabled: false
+      acrylic: false
+      dark_mode: false
+      round_corners: false
+      border_color: None
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: "100%"
+      height: 46
+    padding:
+      top: -14
+      left: 16
+      bottom: 38
+      right: 16
+    widgets:
+      left:
+        [
+          "app_button",
+          "apps",
+          taskbar
+        ]
+      center: [
+      ]
+      right:
+        [
+          media,
+          volume,
+          "clock",
+        ]
+
+widgets:
+  volume:
+    type: "yasb.volume.VolumeWidget"
+    options:
+      label: "<span>{icon}</span>"
+      label_alt: "{level}:{volume}"
+      tooltip: false
+      volume_icons:
+        - "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\volume-x.svg\"/>" # Icon for muted
+        - "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\volume.svg\"/>" # Icon for 0-10% volume
+        - "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\volume.svg\"/>" # Icon for 11-30% volume
+        - "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\volume-1.svg\"/>" # Icon for 31-60% volume
+        - "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\volume-2.svg\"/>" # Icon for 61-100% volume
+      callbacks:
+        on_right: "exec cmd.exe /c start ms-settings:sound"
+
+  clock:
+    type: "yasb.clock.ClockWidget"
+    options:
+      label: "<span class=\"icon\"><img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\clock.svg\"/></span> {%I:%M}"
+      label_alt: "<span class=\"icon\"><img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\calendar.svg\"/></span> {%A, %d %B %Y}"
+      timezones: []
+
+  komorebi_workspaces:
+    type: "komorebi.workspaces.WorkspaceWidget"
+    options:
+        label_offline: "Offline"
+        label_workspace_btn: "{name}"
+        label_workspace_active_btn: "{name}"
+        label_workspace_populated_btn: "{name}"
+        label_default_name: "{name}"
+        # label_workspace_btn: "\udb81\udc3d"
+        # label_workspace_active_btn: ""
+        # label_workspace_populated_btn: "\udb81\udc3e"
+        # label_default_name: "{index}"
+        label_zero_index: false
+        hide_empty_workspaces: false
+        hide_if_offline: true
+        animation: true
+
+  komorebi_active_layout:
+    type: "komorebi.active_layout.ActiveLayoutWidget"
+    options:
+      hide_if_offline: true
+      label: "{icon}"
+      layouts:
+        [
+          "bsp",
+          "columns",
+          "rows",
+          "grid",
+          "vertical_stack",
+          "horizontal_stack",
+          "ultrawide_vertical_stack",
+          "right_main_vertical_stack",
+        ]
+      layout_icons:
+        bsp: "BSP"
+        columns: "COL"
+        rows: "ROW"
+        grid: "GRD"
+        vertical_stack: "VST"
+        horizontal_stack: "HST"
+        ultrawide_vertical_stack: "UWS"
+        right_main_vertical_stack: "RMV"
+        monocle: "MON"
+        maximised: "MAX"
+        floating: "FLT"
+        paused: "PAU"
+      container_padding:
+        top: 0
+        left: 8
+        bottom: 0
+        right: 8
+      callbacks:
+        on_left: "next_layout"
+        on_middle: "toggle_monocle"
+        on_right: "prev_layout"
+
+  active_window:
+    type: "yasb.active_window.ActiveWindowWidget"
+    options:
+      label: "{win[title]}"
+      label_alt: "[class_name='{win[class_name]}' exe='{win[process][name]}' hwnd={win[hwnd]}]"
+      label_no_window: "No Active Window"
+      label_icon: false
+      label_icon_size: 16
+      max_length: 32
+      max_length_ellipsis: "\u2026"
+      monitor_exclusive: true
+
+
+  traffic:
+    type: "yasb.traffic.TrafficWidget"
+    options:
+      label: "<span><img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\speed-upload.svg\"/></span> {upload_speed}"
+      label_alt: "<span><img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\speed-download.svg\"/></span> {download_speed}"
+      update_interval: 1000
+      callbacks:
+        on_left: 'toggle_label'
+        on_right: 'exec cmd /c Taskmgr'
+
+  taskbar:
+    type: "yasb.taskbar.TaskbarWidget"
+    options:
+      animation: true
+      icon_size: 14
+      ignore_apps:
+        processes: []
+        titles: []
+        classes: []
+      container_padding:
+        top: 0
+        left: 0
+        bottom: 0
+        right: 0
+  media:
+    type: "yasb.media.MediaWidget"
+    options:
+      label: "{title} ー {artist}"
+      label_alt: "{title}"
+      hide_empty: true
+      callbacks:
+        on_left: "toggle_label"
+        on_middle: "do_nothing"
+        on_right: "do_nothing"
+      max_field_size:
+        label: 20
+        label_alt: 56
+      show_thumbnail: true
+      controls_only: false
+      controls_left: false
+      thumbnail_alpha: 80
+      thumbnail_padding: 38
+      thumbnail_corner_radius: 13
+      icons:
+        prev_track: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\skip-back.svg\"/>"
+        next_track: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\skip-forward.svg\"/>"
+        play: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\play.svg\"/>"
+        pause: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\pause.svg\"/>"
+  apps:
+    type: "yasb.applications.ApplicationsWidget"
+    options:
+      label: "{data}"
+      image_icon_size: 16
+      app_list:
+        - {icon: "C:\\Users\\Admin\\.config\\yasb\\icons\\folder-closed.svg", launch: "explorer"}
+        - {icon: "C:\\Users\\Admin\\.config\\yasb\\icons\\earth.svg", launch: "C:\\Program Files\\Naver\\Naver Whale\\Application\\whale.exe"}
+        - {icon: "C:\\Users\\Admin\\.config\\yasb\\icons\\code-xml.svg", launch: "code"}
+        - {icon: "C:\\Users\\Admin\\.config\\yasb\\icons\\terminal.svg", launch: "C:\\Program Files\\WindowsApps\\Microsoft.WindowsTerminal_1.21.3231.0_x64__8wekyb3d8bbwe\\WindowsTerminal.exe"}
+        - {icon: "C:\\Users\\Admin\\.config\\yasb\\icons\\notepad-text.svg", launch: "notepad"}
+  app_button:
+      type: "yasb.custom.CustomWidget"
+      options:
+        label: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\layout-grid.svg\"/>"
+        label_alt: "<span>\uf40e</span>"
+        class_name: "app-button"
+        callbacks:
+          on_left: "exec start_menu"
