@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dotfiles Configuration",
+  "description": "A schema for the dotfiles configuration file.",
+  "type": "object",
+  "properties": {
+    "scoop": {
+      "type": "object",
+      "properties": {
+        "buckets": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string",
+                "description": "The bucket name to add."
+              },
+              {
+                "type": "string",
+                "description": "The GitHub repository to add as a bucket."
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "apps": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+                {
+                "type": ["string", "null"],
+                "description": "The executable name or path to check if the app is already installed."
+              },
+              {
+                "type": "string",
+                "description": "The app to install."
+              },
+              {
+                "type": "string",
+                "description": "The script to run after installing the app."
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 3
+          }
+        }
+      },
+      "required": ["buckets", "apps"]
+    },
+    "winget": {
+      "type": "object",
+      "properties": {
+        "apps": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": [
+                {
+                "type": ["string", "null"],
+                "description": "The executable name or path to check if the app is already installed."
+              },
+              {
+                "type": "string",
+                "description": "The app to install."
+              },
+              {
+                "type": "string",
+                "description": "The script to run after installing the app."
+              }
+            ],
+            "minItems": 2,
+            "maxItems": 3
+          }
+        }
+      },
+      "required": ["apps"]
+    },
+    "symlink": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string",
+            "description": "The source file or directory to symlink."
+          },
+          {
+            "type": "string",
+            "description": "The destination file or directory to symlink to."
+          }
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      }
+    }
+  }
+}
