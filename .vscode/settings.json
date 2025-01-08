@@ -173,7 +173,7 @@
 		}
 	},
 	"vsix.groups": {
-		"ui": ["ms:aldous.supabase-vscode-theme-dark", "ms:file-icons.file-icons", "ms:be5invis.vscode-custom-css"],
+		"ui": ["ms:aldous.supabase-vscode-theme-dark", "ms:karyfoundation.theme-karyfoundation-themes", "ms:file-icons.file-icons", "ms:be5invis.vscode-custom-css"],
 		"misc": ["ms:LeonardSSH.vscord"],
 		"highlight": ["ms:shardulm94.trailing-spaces", "ms:Dervex.universal-comments", "ms:IBM.output-colorizer"],
 		"formatter": [
@@ -209,7 +209,7 @@
 	"vsix.extensions": ["core", "languages"],
   // theme
   "workbench.colorTheme": "Supabase Theme (Dark)",
-  "workbench.iconTheme": "file-icons",
+  "workbench.iconTheme": "kary-pro-colors-icons",
   "vscode_custom_css.imports": [
     "file:///C:/Users/Admin/.config/vscode/screencast.css",
     "file:///C:/Users/Admin/.config/vscode/styles.css",
