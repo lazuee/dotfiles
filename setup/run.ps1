@@ -1,6 +1,6 @@
 $env:HOME = $env:USERPROFILE
 $env:USER = $env:USERNAME
-$env:DOTFILES = $PSScriptRoot
+$env:DOTFILES = (Get-Item $PSScriptRoot).Parent.FullName
 [Environment]::SetEnvironmentVariable("HOME", "$env:HOME", "User")
 [Environment]::SetEnvironmentVariable("USER", "$env:USER", "User")
 [Environment]::SetEnvironmentVariable("DOTFILES", "$env:DOTFILES", "User")
@@ -26,12 +26,21 @@ foreach ($app in $config.scoop.apps) {
   if (Test-App -App $app[0]) {
     Write-Host "scoop: Updating $($app[1])..."
     Invoke-Expression "scoop update $($app[1])" *>$null
-
-    continue
+  } else {
+    Write-Host "scoop: Installing $($app[1])..."
+    Invoke-Expression "scoop install $($app[1])" *>$null
   }
 
-  Write-Host "scoop: Installing $($app[1])..."
-  Invoke-Expression "scoop install $($app[1])" *>$null
+  if (!([string]::IsNullOrWhiteSpace($app[2]))) {
+    Write-Host "scoop: Running post-install for $($app[1])..."
+    try {
+      Invoke-Expression $app[2] *>$null
+    }
+    catch {
+      Write-Warning "scoop: Post-install failed for $($app[1])"
+      Write-Error $_.Exception.Message
+    }
+  }
 }
 
 foreach ($app in $config.winget.apps) {
@@ -42,10 +51,19 @@ foreach ($app in $config.winget.apps) {
   if (Test-App -App $app[0]) {
     Write-Host "winget: Updating $($app[1])..."
     Invoke-Expression "winget upgrade $($app[1])" *>$null
-
-    continue
+  } else {
+    Write-Host "winget: Installing $($app[1])..."
+    Invoke-Expression "winget install $($app[1])" *>$null
   }
 
-  Write-Host "winget: Installing $($app[1])..."
-  Invoke-Expression "winget install $($app[1])" *>$null
+  if (!([string]::IsNullOrWhiteSpace($app[2]))) {
+    Write-Host "winget: Running post-install for $($app[1])..."
+    try {
+      Invoke-Expression $app[2] *>$null
+    }
+    catch {
+      Write-Warning "winget: Post-install failed for $($app[1])"
+      Write-Error $_.Exception.Message
+    }
+  }
 }

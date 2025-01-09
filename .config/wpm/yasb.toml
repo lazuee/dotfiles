@@ -16,5 +16,5 @@ Executable = "powershell.exe"
 Arguments = ["-NoProfile", "-Command", "& {& yasbc stop; Wait-Process -Name 'yasb' -ErrorAction SilentlyContinue; exit 0}"]
 
 [Service.Healthcheck.Process]
-DelaySec = 8
+DelaySec = 10
 Target = "yasb.exe"

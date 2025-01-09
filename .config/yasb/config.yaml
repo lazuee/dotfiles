@@ -21,7 +21,7 @@ bars:
       round_corners: false
       border_color: None
     window_flags:
-      always_on_top: false
+      always_on_top: true
       windows_app_bar: true
     dimensions:
       width: "100%"
@@ -58,7 +58,7 @@ bars:
       round_corners: false
       border_color: None
     window_flags:
-      always_on_top: false
+      always_on_top: true
       windows_app_bar: true
     dimensions:
       width: "100%"

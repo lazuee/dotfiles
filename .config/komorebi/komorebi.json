@@ -1,5 +1,5 @@
 {
-  "$schema": "./komorebi-schema.json",
+  "$schema": "file:///C:/Users/Admin/.dotfiles/.config/komorebi/komorebi-schema.json",
   "app_specific_configuration_path": "C:\\Users\\Admin\\.config\\komorebi\\applications.json",
   "window_hiding_behaviour": "Cloak",
   "cross_monitor_move_behaviour": "Insert",

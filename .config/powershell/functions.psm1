@@ -25,10 +25,12 @@ function Link-Path {
         [string]$Target
     )
 
-    if (Test-Path -Path $Path) {
-        Remove-Item -Path $Path -Recurse -Force -ErrorAction SilentlyContinue
+    if (!(Test-Path -Path $Target)) {
+        Write-Warning "symlink: [target not found](failed) $Target"
+        return
     }
 
+    Remove-Item -Path $Path -Recurse -Force -Confirm:$false -ErrorAction SilentlyContinue | Out-Null
     New-Item -ItemType Directory -Path (Split-Path -Parent $Path) -Force -ErrorAction SilentlyContinue | Out-Null
 
     foreach ($type in @("Container", "Leaf")) {
@@ -41,6 +43,7 @@ function Link-Path {
                     }
                     catch {
                         Write-Warning "symlink: [folder](failed) $Target -> $Path"
+                        Write-Error $_
                     }
                 }
                 "Leaf" {
@@ -50,12 +53,11 @@ function Link-Path {
                     }
                     catch {
                         Write-Warning "symlink: [file](failed) $Target -> $Path"
+                        Write-Error $_
                     }
                 }
             }
             break
         }
     }
-
-    Start-Sleep -Seconds 2
 }

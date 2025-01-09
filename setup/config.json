@@ -10,11 +10,13 @@
     "apps": [
       [
         "7z",
-        "main/7zip"
+        "main/7zip",
+        "regedit /s \"$(Invoke-Expression \"scoop prefix 7zip\")\\install-context.reg\""
       ],
       [
         "aria2c",
-        "main/aria2"
+        "main/aria2",
+        "scoop config aria2-warning-enabled false"
       ],
       [
         "innounp",
@@ -26,7 +28,8 @@
       ],
       [
         "komorebi",
-        "lazuee/komorebi-nightly"
+        "lazuee/komorebi-nightly",
+        "komorebic fetch-asc"
       ],
       [
         "whkd",
@@ -72,16 +75,12 @@
   },
   "symlinks": [
     [
-      ".config/komorebi/applications.json",
-      "%USERPROFILE%/.config/komorebi/applications.json"
-    ],
-    [
-      ".config/komorebi/komorebi-bar.json",
-      "%USERPROFILE%/.config/komorebi/komorebi-bar.json"
-    ],
-    [
-      ".config/komorebi/komorebi-bar.json",
+      ".config/komorebi/komorebi.json",
       "%USERPROFILE%/.config/komorebi/komorebi.json"
+    ],
+    [
+      ".config/komorebi/named-workspace-rules.ps1",
+      "%USERPROFILE%/.config/komorebi/named-workspace-rules.ps1"
     ],
     [
       ".config/whkd/whkdrc",
