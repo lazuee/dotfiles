@@ -3,7 +3,7 @@
 > My Personal dotfiles that I used in Windows 11
 
 > [!NOTE]
-> This repository is a new version of my old dotfiles, and the old versions can be found in the [branches](https://github.com/lazuee/dotfiles/branches/yours).
+> This repository is a new version of my old dotfiles, and the old versions can be found in the [branches](https://github.com/lazuee/dotfiles/branches/active).
 
 ### Star the project 🌟
 
