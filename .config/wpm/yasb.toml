@@ -1,7 +1,6 @@
 [Unit]
 Name = "yasb"
 Description = "status bar for Windows"
-Requires = ["taskbar-toggle"]
 
 [Service]
 Kind = "Forking"

@@ -17,8 +17,8 @@
   "global_work_area_offset": {
     "top": -6,
     "bottom": -12,
-    "left": 6,
-    "right": 12
+    "left": 3,
+    "right": 6
   },
   "animation": {
     "enabled": true,

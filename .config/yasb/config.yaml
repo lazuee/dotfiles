@@ -21,7 +21,7 @@ bars:
       round_corners: false
       border_color: None
     window_flags:
-      always_on_top: true
+      always_on_top: false
       windows_app_bar: true
     dimensions:
       width: "100%"
@@ -43,6 +43,7 @@ bars:
       ]
       right:
         [
+          weather
         ]
   bottom-bar:
     enabled: true
@@ -58,7 +59,7 @@ bars:
       round_corners: false
       border_color: None
     window_flags:
-      always_on_top: true
+      always_on_top: false
       windows_app_bar: true
     dimensions:
       width: "100%"
@@ -171,7 +172,7 @@ widgets:
       label_no_window: "No Active Window"
       label_icon: false
       label_icon_size: 16
-      max_length: 32
+      max_length: 56
       max_length_ellipsis: "\u2026"
       monitor_exclusive: true
 
@@ -216,7 +217,7 @@ widgets:
       show_thumbnail: true
       controls_only: false
       controls_left: false
-      thumbnail_alpha: 80
+      thumbnail_alpha: 50
       thumbnail_padding: 38
       thumbnail_corner_radius: 13
       icons:
@@ -243,3 +244,26 @@ widgets:
         class_name: "app-button"
         callbacks:
           on_left: "exec start_menu"
+
+  weather:
+    type: "yasb.weather.WeatherWidget"
+    options:
+      label: "<span>{icon}</span> {temp_c}"
+      label_alt: '{location}: Temperature {min_temp_c} / {max_temp_c} ー Humidity {humidity}'
+      api_key: '3bf4cf9a7c3f40d6b31174128242807'
+      update_interval: 600 #Update interval in seconds, Min 600
+      hide_decimal: true
+      location: 'San Isidro (Lagao 2nd), General Santos City, PH'
+      callbacks:
+        on_left: "toggle_label"
+      icons:
+        sunnyDay: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\sun.svg\"/>"
+        clearNight: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\moon.svg\"/>"
+        cloudyDay: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\cloud-sun.svg\"/>"
+        cloudyNight: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\cloud-moon.svg\"/>"
+        rainyDay: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\cloud-sun-rain.svg\"/>"
+        rainyNight: "<img src=\"C:\\Users\\Admin\\.config\\yasb\\icons\\cloud-moon-rain.svg\"/>"
+        snowyIcyDay: ""
+        snowyIcyNight: ""
+        blizzard: ""
+        default: ""

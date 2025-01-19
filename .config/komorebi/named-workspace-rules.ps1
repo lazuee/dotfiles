@@ -16,6 +16,8 @@ if (Test-Path $filePath) {
                 $command = "komorebic named-workspace-rule $kind $id $workspace"
                 Write-Host "Executing: $command"
                 Invoke-Expression $command
+                Start-Sleep 2
+                komorebic retile
             }
         }
     } else {

@@ -208,7 +208,7 @@
 	},
 	"vsix.extensions": ["core", "languages"],
   // theme
-  "workbench.colorTheme": "Supabase Theme (Dark)",
+  "workbench.colorTheme": "Kary Pro Colors － Dark",
   "workbench.iconTheme": "kary-pro-colors-icons",
   "vscode_custom_css.imports": [
     "file:///C:/Users/Admin/.config/vscode/screencast.css",
