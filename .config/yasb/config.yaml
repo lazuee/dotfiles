@@ -1,5 +1,6 @@
-watch_stylesheet: true
-watch_config: true
+# disable watch, use wpm instead to restart yasb
+watch_stylesheet: false
+watch_config: false
 debug: false
 hide_taskbar: false
 komorebi:

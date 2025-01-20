@@ -1,7 +1,7 @@
 {
   "update.mode": "none",
   "update.enableWindowsBackgroundUpdates": false,
-	"http.proxySupport": "off",
+  "http.proxySupport": "off",
   "telemetry.telemetryLevel": "off",
   "security.workspace.trust.enabled": false,
   "extensions.autoCheckUpdates": false,
@@ -64,14 +64,14 @@
   "workbench.reduceMotion": "on",
   // cleanup ui
   "window.commandCenter": false,
-	"diffEditor.useInlineViewWhenSpaceIsLimited": false,
-	"explorer.expandSingleFolderWorkspaces": false,
-	"explorer.incrementalNaming": "smart",
-	"explorer.decorations.badges": false,
-	"explorer.confirmPasteNative": false,
-	"explorer.confirmDragAndDrop": false,
-	"explorer.confirmDelete": false,
-	"explorer.compactFolders": true,
+  "diffEditor.useInlineViewWhenSpaceIsLimited": false,
+  "explorer.expandSingleFolderWorkspaces": false,
+  "explorer.incrementalNaming": "smart",
+  "explorer.decorations.badges": false,
+  "explorer.confirmPasteNative": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false,
+  "explorer.compactFolders": true,
   "scm.compactFolders": false,
   "editor.hideCursorInOverviewRuler": true,
   "editor.minimap.enabled": false,
@@ -97,18 +97,18 @@
     "showCommandGroups": false,
     "showSingleEditorCursorMoves": true
   },
-	// inlayhints in TS/JS
-	"editor.inlayHints.fontSize": 11,
-	"typescript.inlayHints.enumMemberValues.enabled": true,
-	"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-	"typescript.inlayHints.parameterTypes.enabled": true,
-	"typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-	"typescript.inlayHints.parameterNames.enabled": "all",
-	"javascript.inlayHints.enumMemberValues.enabled": true,
-	"javascript.inlayHints.functionLikeReturnTypes.enabled": true,
-	"javascript.inlayHints.parameterTypes.enabled": true,
-	"javascript.inlayHints.propertyDeclarationTypes.enabled": true,
-	"javascript.inlayHints.parameterNames.enabled": "all",
+  // inlayhints in TS/JS
+  "editor.inlayHints.fontSize": 11,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterTypes.enabled": true,
+  "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "all",
   // intellisense
   "editor.inlineSuggest.enabled": true,
   "editor.inlineSuggest.suppressSuggestions": true,
@@ -160,53 +160,87 @@
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   // vsix
-	"vsix.debug": true,
-	"vsix.sources": {
-		"ms": {
-			"type": "marketplace",
-			"serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"
-		},
-		"vsx": {
-			"type": "marketplace",
-			"serviceUrl": "https://open-vsx.org/vscode/gallery",
-			"fallback": "ms"
-		}
-	},
-	"vsix.groups": {
-		"ui": ["ms:aldous.supabase-vscode-theme-dark", "ms:karyfoundation.theme-karyfoundation-themes", "ms:file-icons.file-icons", "ms:be5invis.vscode-custom-css"],
-		"misc": ["ms:LeonardSSH.vscord"],
-		"highlight": ["ms:shardulm94.trailing-spaces", "ms:Dervex.universal-comments", "ms:IBM.output-colorizer"],
-		"formatter": [
+  "vsix.debug": true,
+  "vsix.sources": {
+    "ms": {
+      "type": "marketplace",
+      "serviceUrl": "https://marketplace.visualstudio.com/_apis/public/gallery"
+    },
+    "vsx": {
+      "type": "marketplace",
+      "serviceUrl": "https://open-vsx.org/vscode/gallery",
+      "fallback": "ms"
+    }
+  },
+  "vsix.groups": {
+    "ui": [
+      "ms:aldous.supabase-vscode-theme-dark",
+      "ms:karyfoundation.theme-karyfoundation-themes",
+      "ms:file-icons.file-icons",
+      "ms:be5invis.vscode-custom-css"
+    ],
+    "misc": [
+      "ms:LeonardSSH.vscord"
+    ],
+    "highlight": [
+      "ms:shardulm94.trailing-spaces",
+      "ms:Dervex.universal-comments",
+      "ms:IBM.output-colorizer"
+    ],
+    "formatter": [
       "ms:EditorConfig.EditorConfig",
       "ms:dbaeumer.vscode-eslint",
       "ms:stylelint.vscode-stylelint",
-			"ms:meganrogge.template-string-converter"
-		],
-		"debug": ["vsx:usernamehw.errorlens", "ms:formulahendry.code-runner"],
-		"git": ["ms:andrii-bohdan.git-commit-wizard"],
-		"typescript": ["ms:yoavbls.pretty-ts-errors"],
-    "css": ["ms:bradlc.vscode-tailwindcss"],
-		"python": ["ms:ms-python.python", "ms:ms-python.vscode-pylance", "ms:ms-python.black-formatter"],
-		"ahk": [
-			"ms:zero-plusplus.vscode-autohotkey-debug",
-			"ms:thqby.vscode-autohotkey2-lsp",
-			"ms:cat1122.vscode-autohotkey-neko-help"
-		],
-		"ps1": [
-			"ms:ms-vscode.PowerShell-Preview",
-			"ms:TylerLeonhardt.vscode-inline-values-powershell",
-			"ms:vin-liberty.powershell-snippets"
-		],
-		"core": ["ui", "misc", "highlight", "formatter", "debug", "git"],
-		"languages": [
-			"typescript",
+      "ms:meganrogge.template-string-converter"
+    ],
+    "debug": [
+      "vsx:usernamehw.errorlens",
+      "ms:formulahendry.code-runner"
+    ],
+    "git": [
+      "ms:andrii-bohdan.git-commit-wizard"
+    ],
+    "typescript": [
+      "ms:yoavbls.pretty-ts-errors"
+    ],
+    "css": [
+      "ms:bradlc.vscode-tailwindcss"
+    ],
+    "python": [
+      "ms:ms-python.python",
+      "ms:ms-python.vscode-pylance",
+      "ms:ms-python.black-formatter"
+    ],
+    "ahk": [
+      "ms:zero-plusplus.vscode-autohotkey-debug",
+      "ms:thqby.vscode-autohotkey2-lsp",
+      "ms:cat1122.vscode-autohotkey-neko-help"
+    ],
+    "ps1": [
+      "ms:ms-vscode.PowerShell-Preview",
+      "ms:TylerLeonhardt.vscode-inline-values-powershell",
+      "ms:vin-liberty.powershell-snippets"
+    ],
+    "core": [
+      "ui",
+      "misc",
+      "highlight",
+      "formatter",
+      "debug",
+      "git"
+    ],
+    "languages": [
+      "typescript",
       "css",
-			// "python"
-			// "ahk",
-			// "ps1"
-		]
-	},
-	"vsix.extensions": ["core", "languages"],
+      // "python"
+      // "ahk",
+      // "ps1"
+    ]
+  },
+  "vsix.extensions": [
+    "core",
+    "languages"
+  ],
   // theme
   "workbench.colorTheme": "Kary Pro Colors － Dark",
   "workbench.iconTheme": "kary-pro-colors-icons",

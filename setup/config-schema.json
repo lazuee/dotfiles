@@ -30,8 +30,11 @@
           "items": {
             "type": "array",
             "items": [
-                {
-                "type": ["string", "null"],
+              {
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "The executable name or path to check if the app is already installed."
               },
               {
@@ -48,7 +51,10 @@
           }
         }
       },
-      "required": ["buckets", "apps"]
+      "required": [
+        "buckets",
+        "apps"
+      ]
     },
     "winget": {
       "type": "object",
@@ -58,8 +64,11 @@
           "items": {
             "type": "array",
             "items": [
-                {
-                "type": ["string", "null"],
+              {
+                "type": [
+                  "string",
+                  "null"
+                ],
                 "description": "The executable name or path to check if the app is already installed."
               },
               {
@@ -76,7 +85,9 @@
           }
         }
       },
-      "required": ["apps"]
+      "required": [
+        "apps"
+      ]
     },
     "symlink": {
       "type": "array",
