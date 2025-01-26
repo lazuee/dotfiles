@@ -1,7 +1,7 @@
 [Unit]
 Name = "desktop"
 Description = "everything I need to work on Windows"
-Requires = ["taskbar-toggle", "yasb", "komorebi"]
+Requires = ["yasb", "taskbar-toggle", "komorebi"]
 
 [Service]
 Kind = "Oneshot"

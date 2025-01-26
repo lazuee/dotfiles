@@ -1,149 +1,149 @@
 {
-  "$schema": "file:///C:/Users/Admin/.dotfiles/.config/komorebi/komorebi-schema.json",
-  "app_specific_configuration_path": "C:\\Users\\Admin\\.config\\komorebi\\applications.json",
-  "window_hiding_behaviour": "Cloak",
-  "cross_monitor_move_behaviour": "Insert",
-  "mouse_follows_focus": false,
-  "default_workspace_padding": 0,
-  "default_container_padding": 5,
-  "border": true,
-  "border_width": 6,
-  "border_offset": -1,
-  "border_implementation": "Windows",
-  "border_style": "System",
-  "unmanaged_window_operation_behaviour": "NoOp",
-  "transparency": true,
-  "transparency_alpha": 220,
-  "global_work_area_offset": {
-    "top": -6,
-    "bottom": -12,
-    "left": 3,
-    "right": 6
-  },
-  "animation": {
-    "enabled": true,
-    "fps": 165,
-    "duration": {
-      "movement": 250,
-      "transparency": 150
-    },
-    "style": {
-      "movement": "EaseOutExpo",
-      "transparency": "Linear"
-    }
-  },
-  "border_colours": {
-    "single": "#6ea4fc",
-    "stack": "#a6e3a1",
-    "monocle": "#f38ba8",
-    "unfocused": "#3a5977"
-  },
-  "stackbar": {
-    "height": 34,
-    "mode": "OnStack",
-    "label": "Process",
-    "tabs": {
-      "width": 120,
-      "font_size": 14,
-      "background": "#0c0c0c",
-      "focused_text": "#acacac",
-      "font_family": "Pretendard",
-      "unfocused_text": "#4c4c4c"
-    }
-  },
-  "ignore_rules": [
-    {
-      "kind": "Title",
-      "id": "WindowsFormsParkingWindow",
-      "matching_strategy": "Equals"
-    },
-    {
-      "kind": "Exe",
-      "id": "ServiceHub.ThreadedWaitDialog.exe",
-      "matching_strategy": "Equals"
-    },
-    {
-      "kind": "Exe",
-      "id": "ShareX.exe",
-      "matching_strategy": "Equals"
-    },
-    {
-      "kind": "Exe",
-      "id": "Set-up.exe",
-      "matching_strategy": "Equals"
-    },
-    {
-      "kind": "Exe",
-      "id": "fontview.exe",
-      "matching_strategy": "Equals"
-    }
-  ],
-  "monitors": [
-    {
-      "workspaces": [
-        {
-          "name": "Home",
-          "layout": "Grid"
-        },
-        {
-          "name": "File",
-          "layout": "VerticalStack"
-        },
-        {
-          "name": "Browser",
-          "layout": "RightMainVerticalStack"
-        },
-        {
-          "name": "Code",
-          "layout": "BSP"
-        },
-        {
-          "name": "Terminal",
-          "layout": "BSP"
-        }
-      ]
-    }
-  ],
-  "named_workspace_rules": [
-    {
-      "kind": "Exe",
-      "id": "explorer.exe",
-      "workspace": "Fileh"
-    },
-    {
-      "kind": "Exe",
-      "id": "SystemSettings.exe",
-      "workspace": "File"
-    },
-    {
-      "kind": "Exe",
-      "id": "whale.exe",
-      "workspace": "Browser"
-    },
-    {
-      "kind": "Exe",
-      "id": "Code.exe",
-      "workspace": "Code"
-    },
-    {
-      "kind": "Exe",
-      "id": "cmd.exe",
-      "workspace": "Terminal"
-    },
-    {
-      "kind": "Exe",
-      "id": "bash.exe",
-      "workspace": "Terminal"
-    },
-    {
-      "kind": "Exe",
-      "id": "powershell.exe",
-      "workspace": "Terminal"
-    },
-    {
-      "kind": "Exe",
-      "id": "WindowsTerminal.exe",
-      "workspace": "Terminal"
-    }
-  ]
+    "$schema":  "file:///C:/Users/Admin/.dotfiles/.config/komorebi/komorebi-schema.json",
+    "app_specific_configuration_path":  "C:\\Users\\Admin\\.config\\komorebi\\applications.json",
+    "window_hiding_behaviour":  "Cloak",
+    "cross_monitor_move_behaviour":  "Insert",
+    "mouse_follows_focus":  false,
+    "default_workspace_padding":  0,
+    "default_container_padding":  5,
+    "border":  true,
+    "border_width":  6,
+    "border_offset":  -1,
+    "border_implementation":  "Windows",
+    "border_style":  "System",
+    "unmanaged_window_operation_behaviour":  "NoOp",
+    "transparency":  true,
+    "transparency_alpha":  220,
+    "global_work_area_offset":  {
+                                    "top":  -6,
+                                    "bottom":  -12,
+                                    "left":  3,
+                                    "right":  6
+                                },
+    "animation":  {
+                      "enabled":  true,
+                      "fps":  165,
+                      "duration":  {
+                                       "movement":  250,
+                                       "transparency":  150
+                                   },
+                      "style":  {
+                                    "movement":  "EaseOutExpo",
+                                    "transparency":  "Linear"
+                                }
+                  },
+    "border_colours":  {
+                           "single":  "#6ea4fc",
+                           "stack":  "#a6e3a1",
+                           "monocle":  "#f38ba8",
+                           "unfocused":  "#3a5977"
+                       },
+    "stackbar":  {
+                     "height":  34,
+                     "mode":  "OnStack",
+                     "label":  "Process",
+                     "tabs":  {
+                                  "width":  120,
+                                  "font_size":  14,
+                                  "background":  "#0c0c0c",
+                                  "focused_text":  "#acacac",
+                                  "font_family":  "Pretendard",
+                                  "unfocused_text":  "#4c4c4c"
+                              }
+                 },
+    "ignore_rules":  [
+                         {
+                             "kind":  "Title",
+                             "id":  "WindowsFormsParkingWindow",
+                             "matching_strategy":  "Equals"
+                         },
+                         {
+                             "kind":  "Exe",
+                             "id":  "ServiceHub.ThreadedWaitDialog.exe",
+                             "matching_strategy":  "Equals"
+                         },
+                         {
+                             "kind":  "Exe",
+                             "id":  "ShareX.exe",
+                             "matching_strategy":  "Equals"
+                         },
+                         {
+                             "kind":  "Exe",
+                             "id":  "Set-up.exe",
+                             "matching_strategy":  "Equals"
+                         },
+                         {
+                             "kind":  "Exe",
+                             "id":  "fontview.exe",
+                             "matching_strategy":  "Equals"
+                         }
+                     ],
+    "monitors":  [
+                     {
+                         "workspaces":  [
+                                            {
+                                                "name":  "Home",
+                                                "layout":  "Grid"
+                                            },
+                                            {
+                                                "name":  "File",
+                                                "layout":  "VerticalStack"
+                                            },
+                                            {
+                                                "name":  "Browser",
+                                                "layout":  "RightMainVerticalStack"
+                                            },
+                                            {
+                                                "name":  "Code",
+                                                "layout":  "BSP"
+                                            },
+                                            {
+                                                "name":  "Terminal",
+                                                "layout":  "BSP"
+                                            }
+                                        ]
+                     }
+                 ],
+    "named_workspace_rules":  [
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "explorer.exe",
+                                      "workspace":  "Fileh"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "SystemSettings.exe",
+                                      "workspace":  "File"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "whale.exe",
+                                      "workspace":  "Browser"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "Code.exe",
+                                      "workspace":  "Code"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "cmd.exe",
+                                      "workspace":  "Terminal"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "bash.exe",
+                                      "workspace":  "Terminal"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "powershell.exe",
+                                      "workspace":  "Terminal"
+                                  },
+                                  {
+                                      "kind":  "Exe",
+                                      "id":  "WindowsTerminal.exe",
+                                      "workspace":  "Terminal"
+                                  }
+                              ]
 }
